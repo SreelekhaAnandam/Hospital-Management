@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard | Smart HealthCare</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #fff8e1;
+        margin: 0;
+      }
+
+      header {
+        background: linear-gradient(135deg, #ff8800, #ffa94d);
+        color: white;
+        text-align: center;
+        padding: 20px;
+        font-size: 1.6rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .container {
+        padding: 30px 60px;
+      }
+
+      h2 {
+        color: #ff8800;
+        margin-bottom: 20px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      th,
+      td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #eee;
+        text-align: left;
+      }
+
+      th {
+        background: #ff8800;
+        color: white;
+        font-size: 1rem;
+      }
+
+      tr:hover {
+        background: #fff3cd;
+      }
+
+      .btn {
+        background: #ff8800;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.3s;
+      }
+
+      .btn:hover {
+        background: #cc6f00;
+      }
+
+      .logout-btn {
+        margin-top: 30px;
+        background: #ff8800;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      .logout-btn:hover {
+        background: #cc6f00;
+      }
+
+      /* Modal (popup) styling */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        width: 400px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        text-align: left;
+        position: relative;
+        animation: fadeIn 0.3s ease-in-out;
+      }
+
+      .close-btn {
+        position: absolute;
+        right: 15px;
+        top: 10px;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #ff8800;
+      }
+
+      @keyframes fadeIn {
+        from {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>🧑‍💼 Admin Dashboard</header>
+
+    <div class="container">
+      <h2>📋 Appointment Overview</h2>
+
+      <table id="appointmentTable">
+        <thead>
+          <tr>
+            <th>Patient Name</th>
+            <th>Doctor</th>
+            <th>Disease / Concern</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="appointmentBody"></tbody>
+      </table>
+
+      <center>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </center>
+    </div>
+
+    <!-- Modal for viewing patient details -->
+    <div class="modal" id="detailsModal">
+      <div class="modal-content">
+        <button class="close-btn" onclick="closeModal()">×</button>
+        <h3 style="color: #ff8800">Patient & Doctor Details</h3>
+        <p><strong>Patient Name:</strong> <span id="m_patient"></span></p>
+        <p><strong>Age:</strong> <span id="m_age"></span></p>
+        <p><strong>Gender:</strong> <span id="m_gender"></span></p>
+        <p><strong>Disease / Concern:</strong> <span id="m_disease"></span></p>
+        <p><strong>Doctor:</strong> <span id="m_doctor"></span></p>
+        <p><strong>Hospital:</strong> <span id="m_hospital"></span></p>
+        <p><strong>Date:</strong> <span id="m_date"></span></p>
+        <p><strong>Time:</strong> <span id="m_time"></span></p>
+        <p><strong>Status:</strong> <span id="m_status"></span></p>
+      </div>
+    </div>
+
+    <script>
+      // Access control
+      const user = JSON.parse(sessionStorage.getItem("loggedInUser"));
+      if (!user || user.role !== "admin") {
+        window.location.href = "http://localhost:5000/login.html";
+      }
+
+      const tableBody = document.getElementById("appointmentBody");
+      const appointments =
+        JSON.parse(localStorage.getItem("confirmedAppointments")) || [];
+
+      function renderAppointments() {
+        tableBody.innerHTML = "";
+
+        appointments.forEach((appt, index) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${appt.patientName || "N/A"}</td>
+            <td>${appt.doctorName || "Not Assigned"}</td>
+            <td>${appt.disease || "N/A"}</td>
+            <td>${appt.meetingDate || "N/A"}</td>
+            <td>${appt.time || "N/A"}</td>
+            <td>${appt.status || "Pending"}</td>
+            <td><button class="btn" onclick="viewDetails(${index})">View</button></td>
+          `;
+          tableBody.appendChild(row);
+        });
+      }
+
+      function viewDetails(index) {
+        const appt = appointments[index];
+        document.getElementById("m_patient").textContent =
+          appt.patientName || "N/A";
+        document.getElementById("m_age").textContent = appt.age || "N/A";
+        document.getElementById("m_gender").textContent = appt.gender || "N/A";
+        document.getElementById("m_disease").textContent =
+          appt.disease || "N/A";
+        document.getElementById("m_doctor").textContent =
+          appt.doctorName || "Not Assigned";
+        document.getElementById("m_hospital").textContent =
+          appt.hospital || "SmartCare Multi-Speciality Hospital";
+        document.getElementById("m_date").textContent =
+          appt.meetingDate || "N/A";
+        document.getElementById("m_time").textContent = appt.time || "N/A";
+        document.getElementById("m_status").textContent =
+          appt.status || "Pending";
+
+        document.getElementById("detailsModal").style.display = "flex";
+      }
+
+      function closeModal() {
+        document.getElementById("detailsModal").style.display = "none";
+      }
+
+      function logout() {
+        sessionStorage.clear();
+        window.location.href = "http://localhost:5000/login.html";
+      }
+
+      renderAppointments();
+    </script>
+  </body>
+</html>

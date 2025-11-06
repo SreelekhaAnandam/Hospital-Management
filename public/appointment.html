@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Appointment | Smart HealthCare</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+          url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80")
+            no-repeat center center/cover;
+        color: white;
+        text-align: center;
+        min-height: 100vh;
+        padding: 3rem;
+        margin: 0;
+      }
+
+      .container {
+        background: rgba(255, 255, 255, 0.95);
+        color: #003049;
+        padding: 2rem;
+        border-radius: 20px;
+        max-width: 750px;
+        margin: auto;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      }
+
+      h1 {
+        color: #0077b6;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 1.1rem;
+        margin-top: 10px;
+      }
+
+      select,
+      input[type="time"],
+      input[type="date"] {
+        width: 85%;
+        padding: 10px;
+        font-size: 1rem;
+        border-radius: 10px;
+        border: 2px solid #0077b6;
+        margin-top: 15px;
+        outline: none;
+        transition: 0.3s;
+      }
+
+      select:focus,
+      input:focus {
+        border-color: #00b4d8;
+        box-shadow: 0 0 5px #00b4d8;
+      }
+
+      button {
+        background: #0077b6;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        font-size: 1.1rem;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-top: 25px;
+        transition: 0.3s;
+      }
+
+      button:hover {
+        background: #023e8a;
+      }
+
+      .hospital-card {
+        background: linear-gradient(135deg, #0077b6, #00b4d8);
+        color: white;
+        padding: 20px;
+        border-radius: 15px;
+        margin: 10px;
+        cursor: pointer;
+        display: inline-block;
+        font-weight: 600;
+        transition: 0.3s;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .hospital-card:hover {
+        transform: scale(1.05);
+        background: linear-gradient(135deg, #0096c7, #00b4d8);
+      }
+
+      .availability-box {
+        margin-top: 25px;
+        font-weight: 600;
+        padding: 15px;
+        border-radius: 10px;
+      }
+
+      .available {
+        background: #d4edda;
+        color: #155724;
+        border-left: 5px solid #28a745;
+      }
+
+      .not-available {
+        background: #f8d7da;
+        color: #721c24;
+        border-left: 5px solid #dc3545;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>🩺 Smart HealthCare Appointment</h1>
+      <p>
+        Please select your preferred hospital, disease, date, and time to
+        continue.
+      </p>
+
+      <!-- Step 1: Select Hospital -->
+      <div>
+        <div class="hospital-card" onclick="selectHospital('Apollo Hospitals')">
+          Apollo Hospitals
+        </div>
+        <div
+          class="hospital-card"
+          onclick="selectHospital('Fortis Healthcare')"
+        >
+          Fortis Healthcare
+        </div>
+        <div class="hospital-card" onclick="selectHospital('AIIMS')">AIIMS</div>
+        <div
+          class="hospital-card"
+          onclick="selectHospital('Manipal Hospitals')"
+        >
+          Manipal Hospitals
+        </div>
+        <div class="hospital-card" onclick="selectHospital('Max Healthcare')">
+          Max Healthcare
+        </div>
+        <div class="hospital-card" onclick="selectHospital('Medanta')">
+          Medanta
+        </div>
+        <div
+          class="hospital-card"
+          onclick="selectHospital('Kokilaben Dhirubhai Ambani Hospital')"
+        >
+          Kokilaben Dhirubhai Ambani Hospital
+        </div>
+        <div
+          class="hospital-card"
+          onclick="selectHospital('BLK-Max Super Speciality Hospital')"
+        >
+          BLK-Max Super Speciality Hospital
+        </div>
+        <div class="hospital-card" onclick="selectHospital('Artemis Hospital')">
+          Artemis Hospital
+        </div>
+        <div
+          class="hospital-card"
+          onclick="selectHospital('Indraprastha Apollo Hospital')"
+        >
+          Indraprastha Apollo Hospital
+        </div>
+        <div
+          class="hospital-card"
+          onclick="selectHospital('Lilavati Hospital')"
+        >
+          Lilavati Hospital
+        </div>
+      </div>
+
+      <!-- Step 2: Select Disease -->
+      <div id="diseaseSection" style="display: none">
+        <p><b>Select Disease:</b></p>
+        <select id="diseaseSelect">
+          <option value="">-- Choose Disease --</option>
+          <option value="Cardiology">Heart Disease (Cardiology)</option>
+          <option value="Neurology">Brain Disorder (Neurology)</option>
+          <option value="Orthopedics">Bone/Joint (Orthopedics)</option>
+          <option value="Dermatology">Skin Issue (Dermatology)</option>
+          <option value="Pediatrics">Child Health (Pediatrics)</option>
+          <option value="Ophthalmology">Eye Problem (Ophthalmology)</option>
+          <option value="ENT">Ear/Nose/Throat (ENT)</option>
+          <option value="Gastroenterology">
+            Digestive Issues (Gastroenterology)
+          </option>
+          <option value="Gynecology">Women Health (Gynecology)</option>
+          <option value="Psychiatry">Mental Health (Psychiatry)</option>
+        </select>
+      </div>
+
+      <!-- Step 3: Select Date and Time -->
+      <div id="timeSection" style="display: none">
+        <p><b>Select Date:</b></p>
+        <input type="date" id="appointmentDate" min="" />
+
+        <p><b>Select Time:</b></p>
+        <input type="time" id="appointmentTime" />
+
+        <div id="availabilityMessage"></div>
+
+        <button onclick="goToDoctorPage()">Next</button>
+        <button
+          onclick="goBack()"
+          style="background: #dc3545; margin-left: 10px"
+        >
+          Back
+        </button>
+      </div>
+    </div>
+
+    <script>
+      let selectedHospital = "";
+      const availabilityMessage = document.getElementById(
+        "availabilityMessage"
+      );
+
+      // Step 1: Hospital Selection
+      function selectHospital(hospital) {
+        selectedHospital = hospital;
+        document.getElementById("diseaseSection").style.display = "block";
+      }
+
+      // Step 2: Show date/time picker when disease chosen
+      document
+        .getElementById("diseaseSelect")
+        .addEventListener("change", function () {
+          const disease = this.value;
+          if (disease) {
+            document.getElementById("timeSection").style.display = "block";
+          }
+        });
+
+      // Set today's date as minimum
+      const today = new Date().toISOString().split("T")[0];
+      document.getElementById("appointmentDate").setAttribute("min", today);
+
+      // Step 3: Check doctor availability dynamically
+      document
+        .getElementById("appointmentTime")
+        .addEventListener("change", function () {
+          const time = this.value;
+          const unavailableSlots = [
+            "12:00",
+            "12:30",
+            "13:00",
+            "16:00",
+            "16:30",
+          ];
+
+          if (unavailableSlots.includes(time)) {
+            availabilityMessage.innerHTML =
+              '<div class="availability-box not-available">❌ Doctor not available at this time. Please select another slot.</div>';
+          } else if (time) {
+            availabilityMessage.innerHTML =
+              '<div class="availability-box available">✅ Doctor available at ' +
+              time +
+              ". You can proceed to book your appointment.</div>";
+          } else {
+            availabilityMessage.innerHTML = "";
+          }
+        });
+
+      // Step 4: Proceed to next page
+      function goToDoctorPage() {
+        const disease = document.getElementById("diseaseSelect").value;
+        const date = document.getElementById("appointmentDate").value;
+        const time = document.getElementById("appointmentTime").value;
+
+        if (!selectedHospital || !disease || !date || !time) {
+          alert("Please fill all details before proceeding.");
+          return;
+        }
+
+        const unavailableSlots = ["12:00", "12:30", "13:00", "16:00", "16:30"];
+        if (unavailableSlots.includes(time)) {
+          alert(
+            "The selected time slot is already booked. Please choose another time."
+          );
+          return;
+        }
+
+        sessionStorage.setItem(
+          "appointmentInfo",
+          JSON.stringify({
+            hospital: selectedHospital,
+            disease,
+            date,
+            time,
+          })
+        );
+
+        window.location.href = "doctorList.html";
+      }
+
+      // Back function
+      function goBack() {
+        window.location.href = "patient.html";
+      }
+    </script>
+  </body>
+</html>

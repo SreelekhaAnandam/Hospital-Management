@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hospital Login</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(120deg, #cce5ff, #e6fff5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .login-box {
+        background: white;
+        padding: 40px 50px;
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        width: 380px;
+        text-align: center;
+      }
+      h1 {
+        margin-bottom: 25px;
+        color: #0077b6;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+        outline: none;
+        transition: border 0.2s;
+      }
+      input:focus,
+      select:focus {
+        border-color: #0077b6;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        background: #0077b6;
+        color: white;
+        font-size: 1rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.3s;
+      }
+      button:hover {
+        background: #023e8a;
+      }
+      .footer {
+        margin-top: 20px;
+        color: #555;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-box">
+      <h1>Login Portal</h1>
+      <form id="loginForm">
+        <div id="message" style="height:1.2rem;margin-bottom:8px;color:#b00020"></div>
+        <label for="role">Select Role:</label>
+        <select id="role" required>
+          <option value="">-- Select Role --</option>
+          <option value="patient" selected>Patient</option>
+          <option value="doctor">Doctor</option>
+          <option value="admin">Admin</option>
+        </select>
+
+        <input type="text" id="username" placeholder="Username" required />
+        <input type="password" id="password" placeholder="Password" required />
+
+        <div id="doctorFields" style="display: none">
+          <label for="specialization">Select Specialization:</label>
+          <select id="specialization" required>
+            <option value="">-- Select Specialization --</option>
+            <option value="Cardiology">Cardiology</option>
+            <option value="Neurology">Neurology</option>
+            <option value="Orthopedics">Orthopedics</option>
+            <option value="Dermatology">Dermatology</option>
+            <option value="Pediatrics">Pediatrics</option>
+            <option value="Ophthalmology">Ophthalmology</option>
+            <option value="ENT">ENT</option>
+            <option value="Gastroenterology">Gastroenterology</option>
+            <option value="Gynecology">Gynecology</option>
+            <option value="Psychiatry">Psychiatry</option>
+          </select>
+          <label for="hospital">Select Hospital:</label>
+          <select id="hospital" required>
+            <option value="">-- Select Hospital --</option>
+            <option value="Apollo Hospitals">Apollo Hospitals</option>
+            <option value="Fortis Healthcare">Fortis Healthcare</option>
+            <option value="AIIMS">AIIMS</option>
+            <option value="Manipal Hospitals">Manipal Hospitals</option>
+            <option value="Max Healthcare">Max Healthcare</option>
+            <option value="Medanta">Medanta</option>
+            <option value="Kokilaben Dhirubhai Ambani Hospital">Kokilaben Dhirubhai Ambani Hospital</option>
+            <option value="BLK-Max Super Speciality Hospital">BLK-Max Super Speciality Hospital</option>
+            <option value="Artemis Hospital">Artemis Hospital</option>
+            <option value="Indraprastha Apollo Hospital">Indraprastha Apollo Hospital</option>
+            <option value="Lilavati Hospital">Lilavati Hospital</option>
+          </select>
+        </div>
+
+        <button type="submit">Login</button>
+      </form>
+      <div class="footer">
+        <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+        © 2025 Hospital Management System
+      </div>
+    </div>
+
+    <script>
+      document.getElementById("role").addEventListener("change", function() {
+        const role = this.value;
+        const doctorFields = document.getElementById("doctorFields");
+        if (role === "doctor") {
+          doctorFields.style.display = "block";
+        } else {
+          doctorFields.style.display = "none";
+        }
+      });
+
+      document.getElementById("loginForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        let role = document.getElementById("role").value;
+        if (!role) role = 'patient';
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        console.log("Submitting login", { role, username, password });
+
+        if (!role) {
+          alert("Please select your role!");
+          return;
+        }
+
+        let specialization = "";
+        let hospital = "";
+
+        if (role === "doctor") {
+          specialization = document.getElementById("specialization").value;
+          hospital = document.getElementById("hospital").value;
+
+          if (!specialization || !hospital) {
+            alert("Please select your specialization and hospital!");
+            return;
+          }
+        }
+
+        try {
+          // Use localhost for development to avoid CORS issues when opening file directly
+          const apiBase = 'http://localhost:5000';
+          const response = await fetch(`${apiBase}/api/auth/login`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password, role }),
+          });
+
+          const data = await response.json();
+
+          console.log("Response received", { ok: response.ok, data });
+
+          if (response.ok) {
+            // Save full user object plus token for downstream pages
+            const stored = { ...(data.user || {}), token: data.token };
+            sessionStorage.setItem("loggedInUser", JSON.stringify(stored));
+            if (role === "patient") window.location.href = apiBase + "/patient.html";
+            if (role === "doctor") window.location.href = apiBase + "/doctor.html";
+            if (role === "admin") window.location.href = apiBase + "/admin.html";
+          } else {
+            console.log("Login failed", data.message);
+            document.getElementById('message').textContent = data.message || 'Invalid credentials. Try again!';
+          }
+        } catch (error) {
+          console.error("Login error:", error);
+          console.log("Fetch error", error);
+          document.getElementById('message').textContent = 'Server error. Please try again later.';
+        }
+      });
+    </script>
+  </body>
+</html>
