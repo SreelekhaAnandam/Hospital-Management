@@ -9,6 +9,12 @@
       rel="stylesheet"
     />
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
       body {
         font-family: "Poppins", sans-serif;
         background: #fff8e1;
@@ -28,20 +34,97 @@
 
       .container {
         padding: 30px 60px;
+        max-width: 1400px;
+        margin: 0 auto;
       }
 
-      h2 {
+      .loading {
+        text-align: center;
+        padding: 40px;
         color: #ff8800;
+        font-size: 1.2rem;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .stat-card {
+        background: white;
+        text-align: center;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .stat-card h3 {
+        color: #ff8800;
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+      }
+
+      .stat-card p {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #e65100;
+      }
+
+      .section {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-bottom: 30px;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         margin-bottom: 20px;
+      }
+
+      .section h2 {
+        color: #ff8800;
+        font-size: 1.5rem;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: 0.3s;
+      }
+
+      .btn-primary {
+        background: #ff8800;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: #cc6f00;
+      }
+
+      .btn-small {
+        padding: 6px 12px;
+        font-size: 0.85rem;
       }
 
       table {
         width: 100%;
         border-collapse: collapse;
-        background: white;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        font-size: 0.95rem;
       }
 
       th,
@@ -55,25 +138,55 @@
         background: #ff8800;
         color: white;
         font-size: 1rem;
+        font-weight: 600;
       }
 
       tr:hover {
         background: #fff3cd;
       }
 
-      .btn {
-        background: #ff8800;
-        color: white;
-        border: none;
-        padding: 6px 12px;
-        border-radius: 6px;
-        cursor: pointer;
+      .status-badge {
+        padding: 5px 12px;
+        border-radius: 15px;
+        font-size: 0.85rem;
         font-weight: 600;
-        transition: 0.3s;
       }
 
-      .btn:hover {
-        background: #cc6f00;
+      .status-pending {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      .status-confirmed, .status-approved {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .status-cancelled, .status-rejected {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .status-completed {
+        background: #d1ecf1;
+        color: #0c5460;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #666;
+      }
+
+      .empty-state-icon {
+        font-size: 3rem;
+        margin-bottom: 15px;
       }
 
       .logout-btn {
@@ -91,49 +204,21 @@
         background: #cc6f00;
       }
 
-      /* Modal (popup) styling */
-      .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.6);
-        justify-content: center;
-        align-items: center;
-      }
-
-      .modal-content {
-        background: white;
-        border-radius: 12px;
-        padding: 30px;
-        width: 400px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-        text-align: left;
-        position: relative;
-        animation: fadeIn 0.3s ease-in-out;
-      }
-
-      .close-btn {
-        position: absolute;
-        right: 15px;
-        top: 10px;
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-        color: #ff8800;
-      }
-
-      @keyframes fadeIn {
-        from {
-          transform: scale(0.8);
-          opacity: 0;
+      @media (max-width: 768px) {
+        .container {
+          padding: 15px;
         }
-        to {
-          transform: scale(1);
-          opacity: 1;
+
+        .stats {
+          grid-template-columns: 1fr;
+        }
+
+        table {
+          font-size: 0.85rem;
+        }
+
+        th, td {
+          padding: 8px;
         }
       }
     </style>
@@ -143,105 +228,289 @@
     <header>🧑‍💼 Admin Dashboard</header>
 
     <div class="container">
-      <h2>📋 Appointment Overview</h2>
+      <div id="loadingBox" class="loading" style="display: none;">
+        Loading dashboard data...
+      </div>
 
-      <table id="appointmentTable">
-        <thead>
-          <tr>
-            <th>Patient Name</th>
-            <th>Doctor</th>
-            <th>Disease / Concern</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="appointmentBody"></tbody>
-      </table>
+      <!-- Statistics -->
+      <div class="stats" id="statsSection" style="display: none;">
+        <div class="stat-card">
+          <h3>📅 Total Appointments</h3>
+          <p id="totalAppointments">0</p>
+        </div>
+        <div class="stat-card">
+          <h3>⏳ Pending</h3>
+          <p id="pendingCount">0</p>
+        </div>
+        <div class="stat-card">
+          <h3>✅ Confirmed</h3>
+          <p id="confirmedCount">0</p>
+        </div>
+        <div class="stat-card">
+          <h3>❌ Cancelled</h3>
+          <p id="cancelledCount">0</p>
+        </div>
+      </div>
+
+      <!-- Appointments Section -->
+      <div class="section" id="appointmentsSection" style="display: none;">
+        <div class="section-header">
+          <h2>📋 All Appointments</h2>
+          <button class="btn btn-primary" onclick="refreshAppointments()">
+            🔄 Refresh
+          </button>
+        </div>
+        <div id="appointmentsContent"></div>
+      </div>
 
       <center>
         <button class="logout-btn" onclick="logout()">Logout</button>
       </center>
     </div>
 
-    <!-- Modal for viewing patient details -->
-    <div class="modal" id="detailsModal">
-      <div class="modal-content">
-        <button class="close-btn" onclick="closeModal()">×</button>
-        <h3 style="color: #ff8800">Patient & Doctor Details</h3>
-        <p><strong>Patient Name:</strong> <span id="m_patient"></span></p>
-        <p><strong>Age:</strong> <span id="m_age"></span></p>
-        <p><strong>Gender:</strong> <span id="m_gender"></span></p>
-        <p><strong>Disease / Concern:</strong> <span id="m_disease"></span></p>
-        <p><strong>Doctor:</strong> <span id="m_doctor"></span></p>
-        <p><strong>Hospital:</strong> <span id="m_hospital"></span></p>
-        <p><strong>Date:</strong> <span id="m_date"></span></p>
-        <p><strong>Time:</strong> <span id="m_time"></span></p>
-        <p><strong>Status:</strong> <span id="m_status"></span></p>
-      </div>
-    </div>
-
+    <script src="js/api.js?v=2"></script>
     <script>
-      // Access control
-      const user = JSON.parse(sessionStorage.getItem("loggedInUser"));
-      if (!user || user.role !== "admin") {
-        window.location.href = "http://localhost:5000/login.html";
+      // Check authentication
+      if (!requireAuth('admin')) {
+        // Will redirect if not authenticated
       }
 
-      const tableBody = document.getElementById("appointmentBody");
-      const appointments =
-        JSON.parse(localStorage.getItem("confirmedAppointments")) || [];
+      let appointments = [];
 
-      function renderAppointments() {
-        tableBody.innerHTML = "";
+      // Load dashboard data
+      async function loadDashboard() {
+        const loadingBox = document.getElementById('loadingBox');
+        loadingBox.style.display = 'block';
 
-        appointments.forEach((appt, index) => {
-          const row = document.createElement("tr");
-          row.innerHTML = `
-            <td>${appt.patientName || "N/A"}</td>
-            <td>${appt.doctorName || "Not Assigned"}</td>
-            <td>${appt.disease || "N/A"}</td>
-            <td>${appt.meetingDate || "N/A"}</td>
-            <td>${appt.time || "N/A"}</td>
-            <td>${appt.status || "Pending"}</td>
-            <td><button class="btn" onclick="viewDetails(${index})">View</button></td>
+        try {
+          // Load appointments
+          await loadAppointments();
+
+          // Show sections
+          document.getElementById('statsSection').style.display = 'grid';
+          document.getElementById('appointmentsSection').style.display = 'block';
+
+        } catch (error) {
+          console.error('Error loading dashboard:', error);
+          alert('Error loading dashboard. Please try again.');
+        } finally {
+          loadingBox.style.display = 'none';
+        }
+      }
+
+      // Load appointments
+      async function loadAppointments() {
+        try {
+          // Use getMy() to get all appointments for admin
+          appointments = await AppointmentAPI.getMy();
+          console.log('All Appointments:', appointments);
+
+          // Update statistics
+          document.getElementById('totalAppointments').textContent = appointments.length;
+          document.getElementById('pendingCount').textContent =
+            appointments.filter(a => a.status === 'Pending').length;
+          document.getElementById('confirmedCount').textContent =
+            appointments.filter(a => a.status === 'Confirmed' || a.status === 'Approved').length;
+          document.getElementById('cancelledCount').textContent =
+            appointments.filter(a => a.status === 'Cancelled' || a.status === 'Rejected').length;
+
+          // Display appointments
+          displayAppointments(appointments);
+
+        } catch (error) {
+          console.error('Error loading appointments:', error);
+          document.getElementById('appointmentsContent').innerHTML =
+            '<div class="empty-state"><div class="empty-state-icon">⚠️</div><p>Error loading appointments. Please try again.</p></div>';
+        }
+      }
+
+      // Display appointments
+      function displayAppointments(appointments) {
+        const content = document.getElementById('appointmentsContent');
+
+        if (appointments.length === 0) {
+          content.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-state-icon">📅</div>
+              <p>No appointments found</p>
+            </div>
           `;
-          tableBody.appendChild(row);
+          return;
+        }
+
+        let html = `
+          <table>
+            <thead>
+              <tr>
+                <th>Patient Name</th>
+                <th>Age/Gender</th>
+                <th>Doctor Name</th>
+                <th>Disease</th>
+                <th>Hospital</th>
+                <th>Date & Time</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+
+        appointments.forEach(apt => {
+          const statusClass = `status-${apt.status.toLowerCase()}`;
+          const patientName = apt.patientId?.name || apt.patientName || 'Unknown Patient';
+          const doctorName = apt.doctorId?.name || apt.doctorName || 'Not Assigned';
+          const date = apt.appointmentDate ? new Date(apt.appointmentDate).toLocaleDateString() : (apt.meetingDate || 'N/A');
+          const time = apt.appointmentTime || apt.time || 'N/A';
+          const disease = apt.disease || apt.specialization || 'N/A';
+          const age = apt.age || 'N/A';
+          const gender = apt.gender || 'N/A';
+
+          html += `
+            <tr>
+              <td><strong>${patientName}</strong></td>
+              <td>${age} / ${gender}</td>
+              <td>${doctorName}</td>
+              <td>${disease}</td>
+              <td>${apt.hospital}</td>
+              <td>${date}<br/><small>${time}</small></td>
+              <td><span class="status-badge ${statusClass}">${apt.status}</span></td>
+              <td>
+                <div class="action-buttons">
+                  <button class="btn btn-primary btn-small" onclick="viewDetails('${apt._id}')">
+                    👁️ View
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `;
         });
+
+        html += '</tbody></table>';
+        content.innerHTML = html;
       }
 
-      function viewDetails(index) {
-        const appt = appointments[index];
-        document.getElementById("m_patient").textContent =
-          appt.patientName || "N/A";
-        document.getElementById("m_age").textContent = appt.age || "N/A";
-        document.getElementById("m_gender").textContent = appt.gender || "N/A";
-        document.getElementById("m_disease").textContent =
-          appt.disease || "N/A";
-        document.getElementById("m_doctor").textContent =
-          appt.doctorName || "Not Assigned";
-        document.getElementById("m_hospital").textContent =
-          appt.hospital || "SmartCare Multi-Speciality Hospital";
-        document.getElementById("m_date").textContent =
-          appt.meetingDate || "N/A";
-        document.getElementById("m_time").textContent = appt.time || "N/A";
-        document.getElementById("m_status").textContent =
-          appt.status || "Pending";
+      // View patient details in modal
+      function viewDetails(appointmentId) {
+        const appointment = appointments.find(apt => apt._id === appointmentId);
+        if (!appointment) {
+          alert('Appointment not found');
+          return;
+        }
 
-        document.getElementById("detailsModal").style.display = "flex";
+        const patientName = appointment.patientId?.name || appointment.patientName || 'Unknown';
+        const patientEmail = appointment.patientId?.email || 'N/A';
+        const patientContact = appointment.patientId?.contactNumber || 'N/A';
+        const doctorName = appointment.doctorId?.name || appointment.doctorName || 'Not Assigned';
+        const doctorEmail = appointment.doctorId?.email || 'N/A';
+        const doctorSpec = appointment.doctorId?.specialization || appointment.specialization || 'N/A';
+        const date = appointment.appointmentDate ? new Date(appointment.appointmentDate).toLocaleDateString() : (appointment.meetingDate || 'N/A');
+        const time = appointment.appointmentTime || appointment.time || 'N/A';
+        
+        const modalContent = `
+          <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center; z-index: 1000;" onclick="this.remove()">
+            <div style="background: white; padding: 30px; border-radius: 15px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto;" onclick="event.stopPropagation()">
+              <h2 style="color: #ff8800; margin-bottom: 20px;">👤 Complete Appointment Details</h2>
+              
+              <div style="display: grid; gap: 15px;">
+                <h3 style="color: #ff8800; margin-top: 10px;">Patient Information</h3>
+                
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid #ff8800;">
+                  <div style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Patient Name</div>
+                  <div style="font-weight: 600; font-size: 1.1rem;">${patientName}</div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                  <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                    <div style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Age</div>
+                    <div style="font-weight: 600;">${appointment.age || 'N/A'}</div>
+                  </div>
+                  <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                    <div style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Gender</div>
+                    <div style="font-weight: 600;">${appointment.gender || 'N/A'}</div>
+                  </div>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                  <div style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Blood Group</div>
+                  <div style="font-weight: 600;">${appointment.bloodGroup || 'N/A'}</div>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                  <div style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Email</div>
+                  <div style="font-weight: 600;">${patientEmail}</div>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                  <div style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Contact Number</div>
+                  <div style="font-weight: 600;">${patientContact}</div>
+                </div>
+                
+                <h3 style="color: #ff8800; margin-top: 10px;">Doctor Information</h3>
+                
+                <div style="background: #e6f7ff; padding: 15px; border-radius: 8px; border-left: 4px solid #0077b6;">
+                  <div style="color: #0077b6; font-size: 0.9rem; margin-bottom: 5px;">Doctor Name</div>
+                  <div style="font-weight: 600; font-size: 1.1rem;">${doctorName}</div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                  <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                    <div style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Specialization</div>
+                    <div style="font-weight: 600;">${doctorSpec}</div>
+                  </div>
+                  <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                    <div style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Email</div>
+                    <div style="font-weight: 600; font-size: 0.85rem;">${doctorEmail}</div>
+                  </div>
+                </div>
+                
+                <h3 style="color: #ff8800; margin-top: 10px;">Appointment Details</h3>
+                
+                <div style="background: #fff3cd; padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107;">
+                  <div style="color: #856404; font-size: 0.9rem; margin-bottom: 5px;">Disease / Concern</div>
+                  <div style="font-weight: 600; color: #856404;">${appointment.disease || appointment.specialization || 'N/A'}</div>
+                </div>
+                
+                ${appointment.symptoms && appointment.symptoms.length > 0 ? `
+                  <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                    <div style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Symptoms</div>
+                    <div style="font-weight: 600;">${appointment.symptoms.join(', ')}</div>
+                  </div>
+                ` : ''}
+                
+                <div style="background: #f0f9ff; padding: 15px; border-radius: 8px; border-left: 4px solid #0ea5e9;">
+                  <div style="color: #0ea5e9; font-size: 0.9rem; margin-bottom: 5px;">Appointment Schedule</div>
+                  <div style="font-weight: 600;">
+                    📅 ${date} at ${time}<br/>
+                    🏥 ${appointment.hospital}<br/>
+                    📊 Status: <span style="color: #ff8800;">${appointment.status}</span>
+                  </div>
+                </div>
+                
+                ${appointment.notes ? `
+                  <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                    <div style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Notes</div>
+                    <div style="font-weight: 600;">${appointment.notes}</div>
+                  </div>
+                ` : ''}
+              </div>
+              
+              <button onclick="this.closest('div[style*=fixed]').remove()" style="margin-top: 20px; width: 100%; padding: 12px; background: #ff8800; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 1rem;">
+                Close
+              </button>
+            </div>
+          </div>
+        `;
+        
+        document.body.insertAdjacentHTML('beforeend', modalContent);
       }
 
-      function closeModal() {
-        document.getElementById("detailsModal").style.display = "none";
+      // Refresh appointments
+      async function refreshAppointments() {
+        await loadAppointments();
       }
 
-      function logout() {
-        sessionStorage.clear();
-        window.location.href = "http://localhost:5000/login.html";
-      }
-
-      renderAppointments();
+      // Load dashboard on page load
+      loadDashboard();
     </script>
   </body>
 </html>

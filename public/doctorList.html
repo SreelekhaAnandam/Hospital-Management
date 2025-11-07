@@ -153,7 +153,7 @@
       async function fetchDoctors(hospital, specialization) {
         try {
           // Fetch all doctors
-          const response = await fetch('http://localhost:5000/api/doctors');
+          const response = await fetch(`${API_BASE_URL}/api/doctors`);
           const doctors = await response.json();
           
           // Filter doctors by hospital and specialization
@@ -210,9 +210,14 @@
           // Get patient profile for appointment details
           const profile = await PatientAPI.getProfile();
           
+          // Use doctor.userId (User ID) instead of doctor._id (Doctor document ID)
+          // This is crucial for the appointment to be linked to the correct user
+          const doctorUserId = doctor.userId?._id || doctor.userId;
+          
           const appointmentData = {
             patientName: profile.name,
             doctorName: doctor.name,
+            doctorId: doctorUserId,  // Fixed: Use userId instead of _id
             hospital: hospital,
             specialization: disease,
             disease: disease,
@@ -225,8 +230,12 @@
             status: "Pending"
           };
 
+          console.log('Creating appointment with data:', appointmentData);
+
           // Create appointment via API
           const createdAppointment = await AppointmentAPI.create(appointmentData);
+          
+          console.log('Appointment created successfully:', createdAppointment);
           
           // Store for confirmation page
           sessionStorage.setItem(

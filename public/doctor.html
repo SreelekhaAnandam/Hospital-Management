@@ -579,25 +579,21 @@
       // Load appointments
       async function loadAppointments() {
         try {
-          appointments = await AppointmentAPI.getAll();
-          console.log('Appointments:', appointments);
-
-          // Filter appointments for this doctor
-          const myAppointments = appointments.filter(apt => 
-            apt.doctorId && apt.doctorId._id === doctorProfile._id
-          );
+          // Use getMy() to get appointments for current doctor
+          appointments = await AppointmentAPI.getMy();
+          console.log('My Appointments:', appointments);
 
           // Update statistics
-          document.getElementById('totalAppointments').textContent = myAppointments.length;
+          document.getElementById('totalAppointments').textContent = appointments.length;
           document.getElementById('pendingCount').textContent = 
-            myAppointments.filter(a => a.status === 'Pending').length;
+            appointments.filter(a => a.status === 'Pending').length;
           document.getElementById('confirmedCount').textContent = 
-            myAppointments.filter(a => a.status === 'Confirmed').length;
+            appointments.filter(a => a.status === 'Confirmed').length;
           document.getElementById('cancelledCount').textContent = 
-            myAppointments.filter(a => a.status === 'Cancelled').length;
+            appointments.filter(a => a.status === 'Cancelled').length;
 
           // Display appointments
-          displayAppointments(myAppointments);
+          displayAppointments(appointments);
 
         } catch (error) {
           console.error('Error loading appointments:', error);
@@ -624,11 +620,11 @@
           <table>
             <thead>
               <tr>
-                <th>Patient</th>
-                <th>Specialization</th>
+                <th>Patient Name</th>
+                <th>Age/Gender</th>
+                <th>Disease</th>
                 <th>Hospital</th>
-                <th>Date</th>
-                <th>Time</th>
+                <th>Date & Time</th>
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
@@ -638,19 +634,26 @@
 
         myAppointments.forEach(apt => {
           const statusClass = `status-${apt.status.toLowerCase()}`;
-          const patientName = apt.patientId?.name || 'Unknown Patient';
-          const date = new Date(apt.appointmentDate).toLocaleDateString();
+          const patientName = apt.patientId?.name || apt.patientName || 'Unknown Patient';
+          const date = apt.appointmentDate ? new Date(apt.appointmentDate).toLocaleDateString() : (apt.meetingDate || 'N/A');
+          const time = apt.appointmentTime || apt.time || 'N/A';
+          const age = apt.age || 'N/A';
+          const gender = apt.gender || 'N/A';
+          const disease = apt.disease || apt.specialization || 'N/A';
 
           html += `
             <tr>
-              <td>${patientName}</td>
-              <td>${apt.specialization}</td>
+              <td><strong>${patientName}</strong></td>
+              <td>${age} / ${gender}</td>
+              <td>${disease}</td>
               <td>${apt.hospital}</td>
-              <td>${date}</td>
-              <td>${apt.appointmentTime}</td>
+              <td>${date}<br/><small>${time}</small></td>
               <td><span class="status-badge ${statusClass}">${apt.status}</span></td>
               <td>
                 <div class="action-buttons">
+                  <button class="btn btn-primary btn-small" onclick="viewPatientDetails('${apt._id}')">
+                    👁️ View
+                  </button>
                   ${apt.status === 'Pending' ? `
                     <button class="btn btn-success btn-small" onclick="updateAppointmentStatus('${apt._id}', 'Confirmed')">
                       ✓ Confirm
@@ -658,7 +661,7 @@
                     <button class="btn btn-danger btn-small" onclick="updateAppointmentStatus('${apt._id}', 'Cancelled')">
                       ✗ Cancel
                     </button>
-                  ` : '-'}
+                  ` : ''}
                 </div>
               </td>
             </tr>
@@ -684,6 +687,96 @@
       // Refresh appointments
       async function refreshAppointments() {
         await loadAppointments();
+      }
+
+      // View patient details in modal
+      function viewPatientDetails(appointmentId) {
+        const appointment = appointments.find(apt => apt._id === appointmentId);
+        if (!appointment) {
+          alert('Appointment not found');
+          return;
+        }
+
+        const patientName = appointment.patientId?.name || appointment.patientName || 'Unknown';
+        const patientEmail = appointment.patientId?.email || 'N/A';
+        const patientContact = appointment.patientId?.contactNumber || 'N/A';
+        const date = appointment.appointmentDate ? new Date(appointment.appointmentDate).toLocaleDateString() : (appointment.meetingDate || 'N/A');
+        const time = appointment.appointmentTime || appointment.time || 'N/A';
+        
+        const modalContent = `
+          <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center; z-index: 1000;" onclick="this.remove()">
+            <div style="background: white; padding: 30px; border-radius: 15px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto;" onclick="event.stopPropagation()">
+              <h2 style="color: #0077b6; margin-bottom: 20px;">👤 Patient Details</h2>
+              
+              <div style="display: grid; gap: 15px;">
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid #0077b6;">
+                  <div style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Patient Name</div>
+                  <div style="font-weight: 600; font-size: 1.1rem;">${patientName}</div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                  <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                    <div style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Age</div>
+                    <div style="font-weight: 600;">${appointment.age || 'N/A'}</div>
+                  </div>
+                  <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                    <div style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Gender</div>
+                    <div style="font-weight: 600;">${appointment.gender || 'N/A'}</div>
+                  </div>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                  <div style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Blood Group</div>
+                  <div style="font-weight: 600;">${appointment.bloodGroup || 'N/A'}</div>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                  <div style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Email</div>
+                  <div style="font-weight: 600;">${patientEmail}</div>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                  <div style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Contact Number</div>
+                  <div style="font-weight: 600;">${patientContact}</div>
+                </div>
+                
+                <div style="background: #fff3cd; padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107;">
+                  <div style="color: #856404; font-size: 0.9rem; margin-bottom: 5px;">Disease / Concern</div>
+                  <div style="font-weight: 600; color: #856404;">${appointment.disease || appointment.specialization || 'N/A'}</div>
+                </div>
+                
+                ${appointment.symptoms && appointment.symptoms.length > 0 ? `
+                  <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                    <div style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Symptoms</div>
+                    <div style="font-weight: 600;">${appointment.symptoms.join(', ')}</div>
+                  </div>
+                ` : ''}
+                
+                <div style="background: #e6f7ff; padding: 15px; border-radius: 8px; border-left: 4px solid #0077b6;">
+                  <div style="color: #0077b6; font-size: 0.9rem; margin-bottom: 5px;">Appointment Details</div>
+                  <div style="font-weight: 600;">
+                    📅 ${date} at ${time}<br/>
+                    🏥 ${appointment.hospital}<br/>
+                    📊 Status: ${appointment.status}
+                  </div>
+                </div>
+                
+                ${appointment.notes ? `
+                  <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                    <div style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Notes</div>
+                    <div style="font-weight: 600;">${appointment.notes}</div>
+                  </div>
+                ` : ''}
+              </div>
+              
+              <button onclick="this.closest('div[style*=fixed]').remove()" style="margin-top: 20px; width: 100%; padding: 12px; background: #0077b6; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 1rem;">
+                Close
+              </button>
+            </div>
+          </div>
+        `;
+        
+        document.body.insertAdjacentHTML('beforeend', modalContent);
       }
 
       // Load dashboard on page load

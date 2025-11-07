@@ -8,7 +8,10 @@ const router = express.Router();
 // Get all appointments (admin)
 router.get("/", auth, requireRole(["admin"]), async (req, res) => {
   try {
-    const appointments = await Appointment.find().sort({ createdAt: -1 });
+    const appointments = await Appointment.find()
+      .populate("patientId", "name email contactNumber")
+      .populate("doctorId", "name specialization email contactNumber")
+      .sort({ createdAt: -1 });
     res.json(appointments);
   } catch (error) {
     logger.error("Error fetching all appointments:", error);
@@ -51,18 +54,18 @@ router.get("/my", auth, async (req, res) => {
       appointments = await Appointment.find({
         patientId: req.user.userId,
       })
-        .populate("doctorId", "name specialization")
+        .populate("doctorId", "name specialization email contactNumber")
         .sort({ appointmentDate: -1 });
     } else if (req.user.role === "doctor") {
       appointments = await Appointment.find({
         doctorId: req.user.userId,
       })
-        .populate("patientId", "name")
+        .populate("patientId", "name email contactNumber")
         .sort({ appointmentDate: -1 });
     } else if (req.user.role === "admin") {
       appointments = await Appointment.find()
-        .populate("patientId", "name")
-        .populate("doctorId", "name specialization")
+        .populate("patientId", "name email contactNumber")
+        .populate("doctorId", "name specialization email contactNumber")
         .sort({ appointmentDate: -1 });
     }
     
