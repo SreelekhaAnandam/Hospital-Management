@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: hospital-management
+    runtime: node
+    region: oregon
+    plan: free
+    branch: main
+    rootDir: hospital-management
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: PORT
+        value: 3000
+    autoDeploy: true
