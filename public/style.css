@@ -1,0 +1,247 @@
+/* Import fonts */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto+Slab:wght@400;700&display=swap");
+
+/* General resets */
+* {
+  box-sizing: border-box;
+}
+body,
+html {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* index.html styles */
+body.index {
+  font-family: "Poppins", sans-serif;
+  background: url("https://images.unsplash.com/photo-1588776814546-5672db467d16?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80")
+    no-repeat center center fixed;
+  background-size: cover;
+  padding: 3rem;
+  color: #074f57;
+}
+
+body.index .container {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 25px;
+  padding: 3rem 3.5rem;
+  max-width: 460px;
+  width: 100%;
+  box-shadow: 0 18px 50px rgba(7, 79, 87, 0.3);
+  backdrop-filter: saturate(160%) blur(20px);
+  box-sizing: border-box;
+  animation: fadeInUp 1s ease forwards;
+}
+
+body.index h1 {
+  font-weight: 600;
+  font-size: 2.8rem;
+  margin-bottom: 2rem;
+  color: #05668d;
+  text-align: center;
+  letter-spacing: 0.07em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+body.index label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+  color: #05668d;
+  font-size: 1.05rem;
+}
+
+body.index input[type="text"],
+body.index input[type="number"],
+body.index select,
+body.index textarea {
+  width: 100%;
+  padding: 14px 20px;
+  margin-top: 0.4rem;
+  margin-bottom: 1.2rem;
+  border-radius: 16px;
+  border: 2px solid #74a4b3;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+body.index input[type="text"]:focus,
+body.index input[type="number"]:focus,
+body.index select:focus,
+body.index textarea:focus {
+  border-color: #028090;
+  outline: none;
+  box-shadow: 0 0 18px #028090aa;
+}
+
+body.index button {
+  width: 100%;
+  padding: 17px 0;
+  background-color: #028090;
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(2, 128, 144, 0.4);
+  transition: background-color 0.3s ease, transform 0.25s ease;
+}
+
+body.index button:hover,
+body.index button:focus {
+  background-color: #026b6e;
+  transform: scale(1.05);
+  box-shadow: 0 14px 35px rgba(2, 107, 110, 0.7);
+}
+
+/* checklist.html styles */
+body.checklist {
+  font-family: "Roboto Slab", serif;
+  background: url("https://images.unsplash.com/photo-1576765607927-9d9dbae08e37?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80")
+    no-repeat center center fixed;
+  background-size: cover;
+  color: #22333b;
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+body.checklist .container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 18px;
+  box-shadow: 0 15px 55px rgba(34, 60, 80, 0.3);
+  padding: 3rem 3.5rem;
+  max-width: 480px;
+  width: 100%;
+  box-sizing: border-box;
+  animation: fadeInDown 1.2s ease forwards;
+}
+
+body.checklist h1 {
+  font-weight: 700;
+  font-size: 3rem;
+  color: #1b4332;
+  margin-bottom: 2.2rem;
+  text-shadow: 0 2px 6px rgba(27, 67, 50, 0.2);
+}
+
+body.checklist label {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  color: #2f766e;
+  cursor: pointer;
+}
+
+body.checklist input[type="checkbox"] {
+  margin-right: 14px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+body.checklist button {
+  width: 100%;
+  padding: 18px 0;
+  margin-top: 2.8rem;
+  background-color: #2f766e;
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 1.25rem;
+  cursor: pointer;
+  box-shadow: 0 9px 28px rgba(47, 118, 110, 0.4);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+body.checklist button:hover,
+body.checklist button:focus {
+  background-color: #1b4332;
+  transform: scale(1.05);
+  box-shadow: 0 12px 30px rgba(27, 67, 50, 0.7);
+}
+
+body.checklist #patientSummary p {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #1b4332;
+  margin: 0 0 1rem 0;
+}
+
+body.checklist #result {
+  margin-top: 20px;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+body.checklist .result-green {
+  color: #2a9d8f;
+}
+
+body.checklist .result-yellow {
+  color: #f4a261;
+}
+
+body.checklist .result-red {
+  color: #e63946;
+}
+
+body.checklist #suggestionPrompt p,
+body.checklist #suggestionPrompt button {
+  font-size: 1rem;
+  color: #2f766e;
+}
+
+body.checklist #suggestionPrompt button {
+  margin: 0 0.4rem;
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: 2px solid #2f766e;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+body.checklist #suggestionPrompt button:hover {
+  background-color: #2f766e;
+  color: white;
+  border-color: #1b4332;
+}
+
+body.checklist #suggestionInputSection textarea {
+  font-family: "Roboto Slab", serif;
+  resize: none;
+  border-radius: 10px;
+  border-color: #74a4b3;
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

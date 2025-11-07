@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Appointment Confirmation</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #c7f9cc, #e9f5db);
+        color: #1b4332;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .confirmation-box {
+        background: white;
+        padding: 35px 45px;
+        border-radius: 20px;
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+        max-width: 550px;
+        width: 100%;
+        text-align: center;
+        animation: fadeIn 1s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      h1 {
+        color: #2d6a4f;
+        margin-bottom: 15px;
+      }
+
+      .details {
+        text-align: left;
+        margin-top: 20px;
+        background: #f1faee;
+        padding: 18px;
+        border-radius: 12px;
+        border-left: 4px solid #52b788;
+      }
+
+      p {
+        margin: 8px 0;
+      }
+
+      .ready-msg {
+        margin-top: 20px;
+        font-weight: 600;
+        color: #007f5f;
+      }
+
+      .doc-msg {
+        background: #d8f3dc;
+        padding: 14px;
+        border-radius: 10px;
+        margin-top: 20px;
+        font-style: italic;
+        color: #081c15;
+      }
+
+      .date-info {
+        background: #f8f9fa;
+        padding: 12px;
+        border-radius: 10px;
+        margin-top: 15px;
+        font-size: 0.95rem;
+        color: #2d6a4f;
+        border: 1px solid #b7e4c7;
+      }
+
+      .highlight {
+        font-weight: 600;
+        color: #1b4332;
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-left: 8px;
+      }
+
+      .status-pending {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      button {
+        margin-top: 25px;
+        background: #1b4332;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.3s;
+        font-size: 1rem;
+      }
+
+      button:hover {
+        background: #081c15;
+        transform: translateY(-2px);
+      }
+
+      footer {
+        margin-top: 25px;
+        font-size: 0.9rem;
+        color: #2d6a4f;
+        border-top: 1px solid #b7e4c7;
+        padding-top: 15px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="confirmation-box">
+      <h1>✅ Appointment Confirmed!</h1>
+
+      <div id="appointmentDetails" class="details"></div>
+
+      <div id="dateDetails" class="date-info"></div>
+
+      <div class="ready-msg">
+        ⏰ Please be ready 15 minutes before your scheduled time.
+      </div>
+
+      <div id="doctorMessage" class="doc-msg"></div>
+
+      <button onclick="goHome()">🏥 Go Back to Dashboard</button>
+
+      <footer>
+        📞 For any queries, call <b>1800-123-HEAL</b> or email
+        <b>support@hospital.com</b>
+      </footer>
+    </div>
+
+    <script>
+      // Retrieve appointment details from session storage
+      const appointment = JSON.parse(
+        sessionStorage.getItem("confirmedAppointment")
+      );
+      const appointmentDiv = document.getElementById("appointmentDetails");
+      const docMsgDiv = document.getElementById("doctorMessage");
+      const dateDiv = document.getElementById("dateDetails");
+
+      if (!appointment) {
+        appointmentDiv.innerHTML =
+          "<p>No appointment found. Please book again.</p>";
+      } else {
+        // Current (booked) date
+        const bookedDate = new Date(appointment.createdAt || new Date());
+        const formattedBookedDate = bookedDate.toLocaleDateString("en-IN", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+
+        // Appointment date
+        const meetingDate = new Date(appointment.appointmentDate || appointment.meetingDate);
+        const formattedMeetingDate = meetingDate.toLocaleDateString("en-IN", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+
+        // Show appointment info
+        const statusClass = appointment.status === 'Pending' ? 'status-pending' : '';
+        appointmentDiv.innerHTML = `
+          <p><b>Patient:</b> ${appointment.patientName || 'You'}</p>
+          <p><b>Doctor:</b> ${appointment.doctorName || appointment.doctor}</p>
+          <p><b>Hospital:</b> ${appointment.hospital}</p>
+          <p><b>Department:</b> ${appointment.specialization || appointment.disease}</p>
+          <p><b>Scheduled Time:</b> ${appointment.appointmentTime || appointment.time}</p>
+          <p><b>Status:</b> <span class="status-badge ${statusClass}">${appointment.status || 'Pending'}</span></p>
+        `;
+
+        // Display dates
+        dateDiv.innerHTML = `
+          <p><span class="highlight">📅 Booked On:</span> ${formattedBookedDate}</p>
+          <p><span class="highlight">🗓️ Appointment Date:</span> ${formattedMeetingDate}</p>
+        `;
+
+        // Doctor personalized messages
+        const doctorTips = {
+          Cardiology:
+            "Please avoid caffeine or heavy food before your consultation.",
+          Neurology:
+            "If you experience dizziness, note down the details before your visit.",
+          Orthopedics:
+            "Bring any previous X-ray or MRI scans for better diagnosis.",
+          Dermatology: "Avoid using creams or lotions before your appointment.",
+          Pediatrics:
+            "Carry your child's medical reports and vaccination history.",
+          Ophthalmology:
+            "Avoid wearing contact lenses before your appointment.",
+          ENT: "Please do not use ear drops or nasal sprays today.",
+          Gynecology: "Bring your previous reports if available.",
+          Psychiatry: "Relax and maintain calmness before your session.",
+          Gastroenterology: "Avoid heavy meals 2 hours before your check-up.",
+        };
+
+        const specialization = appointment.specialization || appointment.disease;
+        docMsgDiv.innerText =
+          doctorTips[specialization] ||
+          "Please follow the doctor's advice carefully and arrive on time.";
+      }
+
+      function goHome() {
+        // Clear the confirmed appointment from session
+        sessionStorage.removeItem("confirmedAppointment");
+        sessionStorage.removeItem("appointmentInfo");
+        window.location.href = "patient.html";
+      }
+    </script>
+  </body>
+</html>

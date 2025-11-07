@@ -1,0 +1,338 @@
+2025-11-06 19:49:47:4947 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-06 19:49:47:4947 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-06 19:50:47:5047 [35mhttp[39m: [35mGET /favicon.ico - ::1[39m
+2025-11-06 20:12:04:124 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-06 20:12:04:124 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-06 20:12:05:125 [32minfo[39m: [32mUsers already exist, skipping data seeding.[39m
+2025-11-06 20:12:06:126 [32minfo[39m: [32mUsers already exist, skipping data seeding.[39m
+2025-11-06 20:15:15:1515 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-06 20:15:15:1515 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-06 20:15:16:1516 [32minfo[39m: [32mUsers already exist, skipping data seeding.[39m
+2025-11-06 20:15:17:1517 [32minfo[39m: [32mUsers already exist, skipping data seeding.[39m
+2025-11-06 20:16:52:1652 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-06 20:16:52:1652 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-06 20:16:53:1653 [32minfo[39m: [32mUsers already exist, skipping data seeding.[39m
+2025-11-06 20:16:53:1653 [35mhttp[39m: [35mGET /api/test - ::ffff:127.0.0.1[39m
+2025-11-06 20:16:54:1654 [32minfo[39m: [32mUsers already exist, skipping data seeding.[39m
+2025-11-06 20:17:18:1718 [35mhttp[39m: [35mPOST /api/auth/register - ::ffff:127.0.0.1[39m
+2025-11-06 20:17:18:1718 [35mhttp[39m: [35mPOST /api/auth/login - ::ffff:127.0.0.1[39m
+2025-11-06 20:17:18:1718 [35mhttp[39m: [35mPOST /api/appointments - ::ffff:127.0.0.1[39m
+2025-11-06 20:26:41:2641 [35mhttp[39m: [35mGET /api/auth/login - ::1[39m
+2025-11-06 20:27:01:271 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-06 20:34:21:3421 [35mhttp[39m: [35mPOST /api/auth/login - ::ffff:127.0.0.1[39m
+2025-11-06 20:36:31:3631 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-06 20:36:31:3631 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-06 20:36:32:3632 [32minfo[39m: [32mUsers already exist, skipping data seeding.[39m
+2025-11-06 20:36:33:3633 [32minfo[39m: [32mUsers already exist, skipping data seeding.[39m
+2025-11-06 20:36:45:3645 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-06 20:37:07:377 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-06 20:37:15:3715 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-06 20:37:24:3724 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-06 21:05:02:52 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-06 21:05:02:52 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-06 21:05:03:53 [32minfo[39m: [32mUsers already exist, skipping data seeding.[39m
+2025-11-06 21:05:04:54 [32minfo[39m: [32mUsers already exist, skipping data seeding.[39m
+2025-11-06 21:05:21:521 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-06 21:11:06:116 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-06 21:14:05:145 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-06 21:16:35:1635 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-06 21:16:35:1635 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-06 21:16:36:1636 [32minfo[39m: [32mUsers already exist, skipping data seeding.[39m
+2025-11-06 21:16:37:1637 [32minfo[39m: [32mUsers already exist, skipping data seeding.[39m
+2025-11-06 21:17:15:1715 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-06 21:20:30:2030 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-06 21:20:30:2030 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-06 21:20:31:2031 [32minfo[39m: [32mUsers already exist, skipping data seeding.[39m
+2025-11-06 21:20:32:2032 [32minfo[39m: [32mUsers already exist, skipping data seeding.[39m
+2025-11-06 21:41:44:4144 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-06 21:41:44:4144 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-06 21:41:46:4146 [32minfo[39m: [32mUsers already exist, skipping data seeding.[39m
+2025-11-06 21:52:57:5257 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-06 21:52:57:5257 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-06 22:03:53:353 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-06 22:03:53:353 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-06 22:36:38:3638 [35mhttp[39m: [35mGET /api/test - ::1[39m
+2025-11-06 22:51:01:511 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-06 22:51:08:518 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-06 22:51:54:5154 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-06 22:51:56:5156 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-06 22:52:37:5237 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-06 22:52:39:5239 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-06 22:53:12:5312 [35mhttp[39m: [35mGET /api/debug/users - ::1[39m
+2025-11-06 22:54:41:5441 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-06 22:55:19:5519 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-06 22:56:17:5617 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-06 22:58:19:5819 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-06 22:58:20:5820 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-06 22:59:56:5956 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-06 23:00:59:059 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-06 23:01:00:10 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-06 23:50:33:5033 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-06 23:50:35:5035 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-06 23:52:43:5243 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-06 23:52:44:5244 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-07 00:14:24:1424 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-07 00:14:25:1425 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-07 00:18:54:1854 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-07 00:18:56:1856 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-07 00:19:45:1945 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:28:39:2839 [35mhttp[39m: [35mGET /api/debug/users - ::1[39m
+2025-11-07 00:38:40:3840 [35mhttp[39m: [35mGET /api/debug/users - ::1[39m
+2025-11-07 00:40:29:4029 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:40:33:4033 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:40:38:4038 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:40:44:4044 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:40:49:4049 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:40:54:4054 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:41:07:417 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:41:13:4113 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:41:18:4118 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:41:23:4123 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:41:28:4128 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:41:33:4133 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:41:39:4139 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:41:44:4144 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:41:49:4149 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:41:55:4155 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:42:01:421 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:42:07:427 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:42:12:4212 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:42:17:4217 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:42:22:4222 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:42:28:4228 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:42:34:4234 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:42:51:4251 [35mhttp[39m: [35mGET /api/debug/users - ::1[39m
+2025-11-07 00:44:53:4453 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:44:58:4458 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 00:45:05:455 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:47:07:477 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-07 00:47:10:4710 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-07 00:52:35:5235 [35mhttp[39m: [35mPOST /api/auth/create-test-user - ::1[39m
+2025-11-07 00:52:43:5243 [35mhttp[39m: [35mGET /api/debug/users - ::1[39m
+2025-11-07 00:53:04:534 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:53:14:5314 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:53:23:5323 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:53:32:5332 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:53:43:5343 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:55:55:5555 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 00:57:38:5738 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 00:57:45:5745 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 00:57:52:5752 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 01:06:12:612 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-07 01:06:13:613 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-07 01:08:07:87 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 01:09:05:95 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 01:15:10:1510 [35mhttp[39m: [35mPOST /api/auth/create-test-user - ::1[39m
+2025-11-07 01:15:29:1529 [35mhttp[39m: [35mPOST /api/debug/users - ::1[39m
+2025-11-07 01:15:38:1538 [35mhttp[39m: [35mGET /api/debug/users - ::1[39m
+2025-11-07 01:15:47:1547 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 01:18:15:1815 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 01:18:37:1837 [35mhttp[39m: [35mGET /api/debug/users - ::1[39m
+2025-11-07 01:18:49:1849 [35mhttp[39m: [35mPOST /api/auth/create-test-user - ::1[39m
+2025-11-07 01:19:00:190 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 01:19:13:1913 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 01:19:26:1926 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 01:19:37:1937 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 01:19:47:1947 [35mhttp[39m: [35mGET /api/debug/users - ::1[39m
+2025-11-07 01:20:48:2048 [35mhttp[39m: [35mGET /api/auth/me - ::1[39m
+2025-11-07 01:20:57:2057 [35mhttp[39m: [35mGET /api/patients - ::1[39m
+2025-11-07 01:21:15:2115 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 01:21:23:2123 [35mhttp[39m: [35mPOST /api/patients/profile - ::1[39m
+2025-11-07 01:21:31:2131 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 01:21:40:2140 [35mhttp[39m: [35mGET /api/appointments - ::1[39m
+2025-11-07 01:21:55:2155 [35mhttp[39m: [35mGET /api/appointments/patient - ::1[39m
+2025-11-07 01:22:26:2226 [35mhttp[39m: [35mPOST /api/auth/create-test-user - ::1[39m
+2025-11-07 01:22:41:2241 [35mhttp[39m: [35mPOST /api/auth/create-test-user - ::1[39m
+2025-11-07 01:22:50:2250 [35mhttp[39m: [35mPOST /api/auth/create-test-user - ::1[39m
+2025-11-07 01:23:01:231 [35mhttp[39m: [35mGET /api/auth/create-test-user - ::1[39m
+2025-11-07 01:23:24:2324 [35mhttp[39m: [35mGET /api/debug/users - ::1[39m
+2025-11-07 01:23:32:2332 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 01:30:15:3015 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-07 01:30:17:3017 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-07 01:31:02:312 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 01:49:31:4931 [35mhttp[39m: [35mGET /api/debug/users - ::1[39m
+2025-11-07 01:49:52:4952 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 01:50:25:5025 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 01:50:34:5034 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 01:50:43:5043 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 01:50:52:5052 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 01:51:07:517 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 01:54:27:5427 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-07 01:54:30:5430 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-07 01:55:30:5530 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-07 01:55:37:5537 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-07 02:08:00:80 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 02:08:22:822 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 02:08:48:848 [35mhttp[39m: [35mPOST /api/patients/profile - ::1[39m
+2025-11-07 02:09:01:91 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 02:09:25:925 [35mhttp[39m: [35mPOST /api/appointments - ::1[39m
+2025-11-07 02:09:25:925 [31merror[39m: [31mError creating appointment: Appointment validation failed: time: Path `time` is required., meetingDate: Path `meetingDate` is required.[39m
+2025-11-07 02:10:04:104 [35mhttp[39m: [35mPOST /api/appointments - ::1[39m
+2025-11-07 02:10:04:104 [31merror[39m: [31mError creating appointment: Appointment validation failed: time: Path `time` is required., meetingDate: Path `meetingDate` is required.[39m
+2025-11-07 02:10:19:1019 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-07 02:10:22:1022 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-07 02:10:32:1032 [35mhttp[39m: [35mPOST /api/appointments - ::1[39m
+2025-11-07 02:10:45:1045 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 02:14:45:1445 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 02:17:57:1757 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 02:23:19:2319 [35mhttp[39m: [35mGET /api/test - ::1[39m
+2025-11-07 02:23:22:2322 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 02:23:23:2323 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 02:23:24:2324 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 02:24:20:2420 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 02:24:21:2421 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 02:28:05:285 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 02:30:07:307 [35mhttp[39m: [35mGET /api/test - ::1[39m
+2025-11-07 02:30:14:3014 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 02:30:16:3016 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 02:30:16:3016 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 02:30:54:3054 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 02:30:54:3054 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 02:31:03:313 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 02:31:07:317 [35mhttp[39m: [35mPOST /api/patients/profile - ::1[39m
+2025-11-07 02:31:08:318 [35mhttp[39m: [35mPOST /api/patients/profile - ::1[39m
+2025-11-07 02:31:09:319 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 02:31:10:3110 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 02:38:05:385 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 02:38:13:3813 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 02:40:33:4033 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 02:42:48:4248 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 02:42:50:4250 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 02:42:50:4250 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 02:43:04:434 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 02:43:06:436 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 02:43:06:436 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 02:43:21:4321 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 02:43:22:4322 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 02:43:22:4322 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 09:27:28:2728 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-07 09:27:29:2729 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-07 09:28:01:281 [35mhttp[39m: [35mGET /favicon.ico - ::1[39m
+2025-11-07 09:28:21:2821 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 09:28:22:2822 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 09:28:22:2822 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 09:28:26:2826 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 09:29:00:290 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 09:29:00:290 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 09:29:02:292 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 09:29:09:299 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 09:29:09:299 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 09:29:15:2915 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 09:29:18:2918 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 09:29:19:2919 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 09:29:49:2949 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 09:31:10:3110 [35mhttp[39m: [35mPOST /api/patients/profile - ::1[39m
+2025-11-07 09:31:11:3111 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 09:31:11:3111 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 09:31:42:3142 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 09:31:42:3142 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 09:39:56:3956 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 09:40:04:404 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 09:40:10:4010 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 09:45:27:4527 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-07 09:45:28:4528 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-07 09:46:45:4645 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 09:46:48:4648 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 09:47:43:4743 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 09:47:43:4743 [32minfo[39m: [32mDoctor profile created for user: john[39m
+2025-11-07 09:47:54:4754 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 09:52:42:5242 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-07 09:52:42:5242 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-07 09:52:56:5256 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 09:52:57:5257 [35mhttp[39m: [35mGET /api/doctors/profile - ::1[39m
+2025-11-07 09:52:57:5257 [35mhttp[39m: [35mGET /api/appointments - ::1[39m
+2025-11-07 09:54:26:5426 [35mhttp[39m: [35mPATCH /api/doctors/profile - ::1[39m
+2025-11-07 09:54:28:5428 [35mhttp[39m: [35mGET /api/doctors/profile - ::1[39m
+2025-11-07 09:54:30:5430 [35mhttp[39m: [35mGET /api/appointments - ::1[39m
+2025-11-07 09:54:46:5446 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 09:54:47:5447 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 09:54:47:5447 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 09:55:16:5516 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 09:55:16:5516 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 09:55:38:5538 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 09:55:38:5538 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 09:56:26:5626 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 09:56:27:5627 [35mhttp[39m: [35mGET /api/doctors/profile - ::1[39m
+2025-11-07 09:56:27:5627 [35mhttp[39m: [35mGET /api/appointments - ::1[39m
+2025-11-07 10:02:12:212 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-07 10:02:12:212 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-07 10:02:21:221 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 10:02:23:223 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 10:02:23:223 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 10:03:25:325 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 10:03:25:325 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 10:05:45:545 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 10:05:46:546 [35mhttp[39m: [35mGET /api/doctors/profile - ::1[39m
+2025-11-07 10:05:46:546 [35mhttp[39m: [35mGET /api/appointments - ::1[39m
+2025-11-07 10:06:15:615 [35mhttp[39m: [35mPATCH /api/doctors/profile - ::1[39m
+2025-11-07 10:06:17:617 [35mhttp[39m: [35mGET /api/doctors/profile - ::1[39m
+2025-11-07 10:06:29:629 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 10:06:31:631 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 10:06:31:631 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 10:24:33:2433 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-07 10:24:33:2433 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-07 10:24:41:2441 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 10:24:43:2443 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 10:24:43:2443 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 10:25:13:2513 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 10:25:13:2513 [35mhttp[39m: [35mPOST /api/appointments - ::1[39m
+2025-11-07 10:25:26:2526 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 10:25:26:2526 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 10:29:04:294 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-07 10:29:05:295 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-07 10:29:06:296 [35mhttp[39m: [35mGET /favicon.ico - ::1[39m
+2025-11-07 10:29:14:2914 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 10:29:15:2915 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 10:29:15:2915 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 10:29:37:2937 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 10:29:37:2937 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 10:38:15:3815 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-07 10:38:16:3816 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-07 10:38:25:3825 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 10:38:27:3827 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 10:38:27:3827 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 10:39:22:3922 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 10:39:22:3922 [35mhttp[39m: [35mPOST /api/appointments - ::1[39m
+2025-11-07 10:39:30:3930 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 10:39:30:3930 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 10:43:47:4347 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-07 10:43:47:4347 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-07 10:43:55:4355 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 10:43:57:4357 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 10:43:57:4357 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 10:44:16:4416 [35mhttp[39m: [35mGET /api/doctors - ::1[39m
+2025-11-07 10:44:32:4432 [35mhttp[39m: [35mGET /api/doctors - ::1[39m
+2025-11-07 10:44:48:4448 [35mhttp[39m: [35mGET /api/doctors - ::1[39m
+2025-11-07 12:18:19:1819 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-07 12:18:29:1829 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-07 12:18:56:1856 [32minfo[39m: [32mServer running on http://localhost:5000[39m
+2025-11-07 12:19:02:192 [32minfo[39m: [32mMongoDB Atlas connected[39m
+2025-11-07 12:19:17:1917 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 12:19:19:1919 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 12:19:19:1919 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 12:19:49:1949 [35mhttp[39m: [35mGET /api/doctors - ::1[39m
+2025-11-07 12:21:57:2157 [35mhttp[39m: [35mGET /api/doctors - ::1[39m
+2025-11-07 12:22:02:222 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 12:22:03:223 [35mhttp[39m: [35mPOST /api/appointments - ::1[39m
+2025-11-07 12:22:12:2212 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 12:22:12:2212 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 12:24:38:2438 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 12:24:56:2456 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 12:24:59:2459 [32minfo[39m: [32mDoctor profile created for user: rajesh kumar[39m
+2025-11-07 12:25:38:2538 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 12:25:40:2540 [35mhttp[39m: [35mGET /api/doctors/profile - ::1[39m
+2025-11-07 12:25:41:2541 [35mhttp[39m: [35mGET /api/appointments - ::1[39m
+2025-11-07 12:26:21:2621 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 12:26:23:2623 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 12:26:23:2623 [35mhttp[39m: [35mGET /api/appointments/my - ::1[39m
+2025-11-07 12:26:45:2645 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 12:27:54:2754 [35mhttp[39m: [35mGET /api/doctors - ::1[39m
+2025-11-07 12:28:04:284 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 12:28:17:2817 [35mhttp[39m: [35mGET /api/patients/profile - ::1[39m
+2025-11-07 12:29:17:2917 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 12:29:20:2920 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 12:29:24:2924 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 12:29:25:2925 [31merror[39m: [31mError in register: E11000 duplicate key error collection: test.users index: username_1 dup key: { username: "kuch" }[39m
+2025-11-07 12:29:39:2939 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m
+2025-11-07 12:30:50:3050 [35mhttp[39m: [35mPOST /api/auth/register - ::1[39m
+2025-11-07 12:31:02:312 [35mhttp[39m: [35mPOST /api/auth/login - ::1[39m

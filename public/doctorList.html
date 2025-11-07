@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Available Doctors</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(120deg, #caf0f8, #e0f7f9);
+        color: #003049;
+        padding: 2rem;
+        text-align: center;
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: auto;
+        background: white;
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      h1 {
+        color: #0077b6;
+        margin-bottom: 1rem;
+      }
+
+      .appointment-info {
+        background: #e6f7ff;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        border-left: 5px solid #0077b6;
+      }
+
+      .appointment-info p {
+        margin: 5px 0;
+        font-weight: 600;
+      }
+
+      .doctor-card {
+        background: linear-gradient(120deg, #f0faff, #ffffff);
+        padding: 20px;
+        margin: 15px 0;
+        border-radius: 12px;
+        text-align: left;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+        cursor: pointer;
+        border: 2px solid transparent;
+      }
+
+      .doctor-card:hover {
+        transform: scale(1.02);
+        border-color: #0077b6;
+      }
+
+      .doctor-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .doctor-name {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #0077b6;
+      }
+
+      .doctor-info {
+        margin-top: 10px;
+        color: #555;
+      }
+
+      .select-btn {
+        background: #0077b6;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: 0.3s;
+      }
+
+      .select-btn:hover {
+        background: #023e8a;
+      }
+
+      button.back {
+        background: #dc3545;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: 0.3s;
+      }
+
+      button.back:hover {
+        background: #c82333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Available Doctors</h1>
+      
+      <div id="appointmentInfo" class="appointment-info"></div>
+      
+      <div id="doctorList"></div>
+      
+      <button class="back" onclick="window.location.href='appointment.html'">
+        ← Back
+      </button>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+      const appointmentInfo = JSON.parse(
+        sessionStorage.getItem("appointmentInfo")
+      );
+      const doctorListDiv = document.getElementById("doctorList");
+      const appointmentInfoDiv = document.getElementById("appointmentInfo");
+
+      if (!appointmentInfo) {
+        doctorListDiv.innerHTML =
+          "<p>No appointment details found. Please go back.</p>";
+      } else {
+        const { hospital, disease, date, time } = appointmentInfo;
+        
+        // Display selected appointment details
+        appointmentInfoDiv.innerHTML = `
+          <p><strong>Hospital:</strong> ${hospital}</p>
+          <p><strong>Specialization:</strong> ${disease}</p>
+          <p><strong>Date:</strong> ${date}</p>
+          <p><strong>Time:</strong> ${time}</p>
+        `;
+
+        // Fetch doctors from the database based on hospital and specialization
+        fetchDoctors(hospital, disease);
+      }
+
+      async function fetchDoctors(hospital, specialization) {
+        try {
+          // Fetch all doctors
+          const response = await fetch('http://localhost:5000/api/doctors');
+          const doctors = await response.json();
+          
+          // Filter doctors by hospital and specialization
+          const filteredDoctors = doctors.filter(doc => 
+            doc.hospitals.includes(hospital) && 
+            doc.specialization === specialization
+          );
+
+          if (filteredDoctors.length === 0) {
+            doctorListDiv.innerHTML = `
+              <p style="color: #dc3545; font-weight: 600;">
+                No doctors available for ${specialization} at ${hospital}. 
+                Please go back and select a different hospital or specialization.
+              </p>
+            `;
+          } else {
+            filteredDoctors.forEach((doctor) => {
+              const div = document.createElement("div");
+              div.className = "doctor-card";
+              div.onclick = () => selectDoctor(doctor);
+
+              div.innerHTML = `
+                <div class="doctor-header">
+                  <div class="doctor-name">${doctor.name}</div>
+                  <div><strong>${doctor.specialization}</strong> | ${doctor.experience} yrs | ⭐ ${doctor.rating.toFixed(1)}</div>
+                </div>
+                <div class="doctor-info">
+                  <p><strong>License:</strong> ${doctor.licenseNumber}</p>
+                  <p><strong>Email:</strong> ${doctor.email || 'N/A'}</p>
+                  <p><strong>Contact:</strong> ${doctor.contactNumber || 'N/A'}</p>
+                </div>
+                <button class="select-btn" onclick="event.stopPropagation(); selectDoctor(${JSON.stringify(doctor).replace(/"/g, '"')})">
+                  Select Doctor
+                </button>
+              `;
+
+              doctorListDiv.appendChild(div);
+            });
+          }
+        } catch (error) {
+          console.error('Error fetching doctors:', error);
+          doctorListDiv.innerHTML = `
+            <p style="color: #dc3545;">
+              Error loading doctors. Please try again later.
+            </p>
+          `;
+        }
+      }
+
+      async function selectDoctor(doctor) {
+        const { hospital, disease, date, time } = appointmentInfo;
+
+        try {
+          // Get patient profile for appointment details
+          const profile = await PatientAPI.getProfile();
+          
+          const appointmentData = {
+            patientName: profile.name,
+            doctorName: doctor.name,
+            hospital: hospital,
+            specialization: disease,
+            disease: disease,
+            appointmentDate: date,
+            appointmentTime: time,
+            age: profile.age,
+            gender: profile.gender,
+            bloodGroup: profile.bloodGroup,
+            symptoms: profile.symptoms || [],
+            status: "Pending"
+          };
+
+          // Create appointment via API
+          const createdAppointment = await AppointmentAPI.create(appointmentData);
+          
+          // Store for confirmation page
+          sessionStorage.setItem(
+            "confirmedAppointment",
+            JSON.stringify(createdAppointment)
+          );
+
+          window.location.href = "confirmation.html";
+        } catch (error) {
+          console.error('Error booking appointment:', error);
+          alert('Error booking appointment: ' + error.message);
+        }
+      }
+    </script>
+  </body>
+</html>
