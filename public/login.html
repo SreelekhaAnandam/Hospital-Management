@@ -194,11 +194,17 @@
             showMessage('Connecting to server...', true);
 
             try {
-                const apiBase = 'http://localhost:5000';
+                // Dynamically set API base URL based on environment
+                const apiBase = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+                    ? 'http://localhost:5000'
+                    : window.location.origin;
+                    
                 const loginData = { username, password, role };
                 
                 console.log('Sending login request:', loginData);
                 console.log('API URL:', `${apiBase}/api/auth/login`);
+                console.log('Current hostname:', window.location.hostname);
+                console.log('Using API base:', apiBase);
 
                 const response = await fetch(`${apiBase}/api/auth/login`, {
                     method: 'POST',
@@ -266,8 +272,14 @@
             }
         });
 
+        // Dynamically set API base URL
+        const apiBase = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:5000'
+            : window.location.origin;
+            
         console.log('Login page loaded successfully');
-        console.log('Server URL: http://localhost:5000');
+        console.log('Current hostname:', window.location.hostname);
+        console.log('Server URL:', apiBase);
     </script>
 </body>
 </html>
