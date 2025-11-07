@@ -1,6 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const Doctor = require("../models/Doctor");
 const logger = require("../logger");
 
 const router = express.Router();
@@ -55,7 +56,7 @@ router.post("/login", async (req, res) => {
 // Register (for admin use)
 router.post("/register", async (req, res) => {
   try {
-    const { username, password, role, name, email } = req.body;
+    const { username, password, role, name, email, specialization, hospitals } = req.body;
 
     // Provide a clearer message for conflicts so users know whether the
     // username or email is already taken.
@@ -78,6 +79,38 @@ router.post("/register", async (req, res) => {
     });
 
     await user.save();
+
+    // If role is doctor, create doctor profile
+    if (role === "doctor") {
+      if (!specialization || !hospitals || hospitals.length === 0) {
+        // Delete the user if doctor profile creation fails
+        await User.findByIdAndDelete(user._id);
+        return res.status(400).json({ 
+          message: "Specialization and at least one hospital are required for doctors" 
+        });
+      }
+
+      const doctor = new Doctor({
+        userId: user._id,
+        name: name,
+        email: email,
+        specialization: specialization,
+        hospitals: hospitals,
+        experience: 0, // Default experience
+        licenseNumber: `LIC-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`, // Auto-generate license number
+        rating: 0,
+      });
+
+      try {
+        await doctor.save();
+        logger.info(`Doctor profile created for user: ${username}`);
+      } catch (doctorError) {
+        // If doctor creation fails, delete the user
+        await User.findByIdAndDelete(user._id);
+        logger.error('Error creating doctor profile:', doctorError);
+        return res.status(500).json({ message: "Error creating doctor profile" });
+      }
+    }
 
     res.status(201).json({ message: "User created successfully" });
   } catch (error) {

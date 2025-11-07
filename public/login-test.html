@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hospital Login - Test Version</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(120deg, #cce5ff, #e6fff5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .login-box {
+        background: white;
+        padding: 40px 50px;
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        width: 380px;
+        text-align: center;
+      }
+      h1 {
+        margin-bottom: 25px;
+        color: #0077b6;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+        outline: none;
+        transition: border 0.2s;
+        box-sizing: border-box;
+      }
+      input:focus,
+      select:focus {
+        border-color: #0077b6;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        background: #0077b6;
+        color: white;
+        font-size: 1rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.3s;
+      }
+      button:hover {
+        background: #023e8a;
+      }
+      button:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+      .footer {
+        margin-top: 20px;
+        color: #555;
+        font-size: 0.9rem;
+      }
+      .message {
+        height: 1.2rem;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+      }
+      .error {
+        color: #b00020;
+      }
+      .success {
+        color: #007700;
+      }
+      .info {
+        color: #0077b6;
+      }
+      #debugInfo {
+        margin-top: 20px;
+        padding: 10px;
+        background: #f5f5f5;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        text-align: left;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-box">
+      <h1>Login Portal (Test)</h1>
+      <form id="loginForm">
+        <div id="message" class="message"></div>
+        
+        <label for="role">Select Role:</label>
+        <select id="role" required>
+          <option value="">-- Select Role --</option>
+          <option value="patient" selected>Patient</option>
+          <option value="doctor">Doctor</option>
+          <option value="admin">Admin</option>
+        </select>
+
+        <input type="text" id="username" placeholder="Username" required value="testpatient123" />
+        <input type="password" id="password" placeholder="Password" required value="test123" />
+
+        <button type="submit" id="loginBtn">Login</button>
+      </form>
+      
+      <div class="footer">
+        <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+        © 2025 Hospital Management System
+      </div>
+
+      <div id="debugInfo"></div>
+    </div>
+
+    <script>
+      // Debug logging function
+      function log(message, type = 'info') {
+        const debugDiv = document.getElementById('debugInfo');
+        const timestamp = new Date().toLocaleTimeString();
+        const logEntry = document.createElement('div');
+        logEntry.textContent = `[${timestamp}] ${message}`;
+        logEntry.style.color = type === 'error' ? '#b00020' : type === 'success' ? '#007700' : '#333';
+        debugDiv.appendChild(logEntry);
+        debugDiv.scrollTop = debugDiv.scrollHeight;
+        console.log(`[${type.toUpperCase()}]`, message);
+      }
+
+      // Show message to user
+      function showMessage(text, type = 'error') {
+        const messageDiv = document.getElementById('message');
+        messageDiv.textContent = text;
+        messageDiv.className = `message ${type}`;
+        log(text, type);
+      }
+
+      // Initialize
+      log('Page loaded successfully');
+      log(`Server URL: http://localhost:5000`);
+
+      // Test server connection on load
+      fetch('http://localhost:5000/api/test')
+        .then(res => res.json())
+        .then(data => {
+          log('Server connection: OK', 'success');
+          log(`Server response: ${JSON.stringify(data)}`);
+        })
+        .catch(err => {
+          log(`Server connection failed: ${err.message}`, 'error');
+          showMessage('Cannot connect to server. Make sure it\'s running on port 5000.', 'error');
+        });
+
+      // Form submission handler
+      document.getElementById("loginForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        log('Form submitted');
+        
+        const loginBtn = document.getElementById('loginBtn');
+        loginBtn.disabled = true;
+        loginBtn.textContent = 'Logging in...';
+        
+        try {
+          const role = document.getElementById("role").value;
+          const username = document.getElementById("username").value.trim();
+          const password = document.getElementById("password").value.trim();
+
+          log(`Attempting login for user: ${username}, role: ${role}`);
+
+          if (!role) {
+            throw new Error('Please select your role!');
+          }
+
+          if (!username || !password) {
+            throw new Error('Please enter username and password!');
+          }
+
+          const apiBase = 'http://localhost:5000';
+          const loginData = { username, password, role };
+          
+          log(`Sending POST request to ${apiBase}/api/auth/login`);
+          log(`Request body: ${JSON.stringify(loginData)}`);
+
+          const response = await fetch(`${apiBase}/api/auth/login`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(loginData),
+          });
+
+          log(`Response status: ${response.status} ${response.statusText}`);
+
+          const data = await response.json();
+          log(`Response data: ${JSON.stringify(data)}`);
+
+          if (response.ok) {
+            log('Login successful!', 'success');
+            showMessage('Login successful! Redirecting...', 'success');
+            
+            // Save user data
+            const stored = { ...(data.user || {}), token: data.token };
+            sessionStorage.setItem("loggedInUser", JSON.stringify(stored));
+            log(`Saved to sessionStorage: ${JSON.stringify(stored)}`);
+            
+            // Redirect based on role
+            let redirectUrl;
+            if (role === "patient") redirectUrl = `${apiBase}/patient.html`;
+            else if (role === "doctor") redirectUrl = `${apiBase}/doctor.html`;
+            else if (role === "admin") redirectUrl = `${apiBase}/admin.html`;
+            
+            log(`Redirecting to: ${redirectUrl}`);
+            
+            setTimeout(() => {
+              window.location.href = redirectUrl;
+            }, 1000);
+          } else {
+            log(`Login failed: ${data.message}`, 'error');
+            showMessage(data.message || 'Invalid credentials. Try again!', 'error');
+            loginBtn.disabled = false;
+            loginBtn.textContent = 'Login';
+          }
+        } catch (error) {
+          log(`Error: ${error.message}`, 'error');
+          showMessage(`Error: ${error.message}`, 'error');
+          loginBtn.disabled = false;
+          loginBtn.textContent = 'Login';
+        }
+      });
+
+      log('Event listeners attached');
+    </script>
+  </body>
+</html>

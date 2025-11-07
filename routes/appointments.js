@@ -42,6 +42,37 @@ router.get("/patient", auth, requireRole(["patient"]), async (req, res) => {
   }
 });
 
+// Get my appointments (for current user - patient, doctor, or admin)
+router.get("/my", auth, async (req, res) => {
+  try {
+    let appointments;
+    
+    if (req.user.role === "patient") {
+      appointments = await Appointment.find({
+        patientId: req.user.userId,
+      })
+        .populate("doctorId", "name specialization")
+        .sort({ appointmentDate: -1 });
+    } else if (req.user.role === "doctor") {
+      appointments = await Appointment.find({
+        doctorId: req.user.userId,
+      })
+        .populate("patientId", "name")
+        .sort({ appointmentDate: -1 });
+    } else if (req.user.role === "admin") {
+      appointments = await Appointment.find()
+        .populate("patientId", "name")
+        .populate("doctorId", "name specialization")
+        .sort({ appointmentDate: -1 });
+    }
+    
+    res.json(appointments);
+  } catch (error) {
+    logger.error("Error fetching my appointments:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 // Create appointment
 router.post("/", auth, requireRole(["patient"]), async (req, res) => {
   try {

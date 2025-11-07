@@ -1,0 +1,14 @@
+{
+  "name": "Test Patient",
+  "age": 30,
+  "gender": "Male",
+  "bloodGroup": "O+",
+  "symptoms": ["Fever", "Headache"],
+  "medicalHistory": ["Diabetes"],
+  "allergies": ["Penicillin"],
+  "emergencyContact": {
+    "name": "Emergency Contact",
+    "phone": "1234567890",
+    "relationship": "Spouse"
+  }
+}

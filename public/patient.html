@@ -12,60 +12,381 @@
       body {
         font-family: "Poppins", sans-serif;
         background: linear-gradient(135deg, #e0f7fa, #ffffff);
+        padding: 40px 20px;
+        margin: 0;
+      }
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      .header {
         text-align: center;
-        padding: 60px;
+        margin-bottom: 40px;
       }
       h1 {
         color: #0077b6;
         font-weight: 700;
         margin-bottom: 10px;
       }
-      p {
+      .welcome-text {
+        color: #333;
+        font-size: 1.1rem;
+      }
+      .profile-alert {
+        background: #fff3cd;
+        border: 2px solid #ffc107;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+      .profile-alert h3 {
+        color: #856404;
+        margin-top: 0;
+      }
+      .profile-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+      .profile-card h2 {
+        color: #0077b6;
+        margin-top: 0;
+        margin-bottom: 20px;
+      }
+      .profile-info {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+      .info-item {
+        padding: 12px;
+        background: #f8f9fa;
+        border-radius: 8px;
+      }
+      .info-label {
+        font-size: 0.85rem;
+        color: #666;
+        margin-bottom: 5px;
+      }
+      .info-value {
+        font-weight: 600;
         color: #333;
         font-size: 1rem;
+      }
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .tag {
+        background: #0077b6;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+      }
+      .btn-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
       }
       .btn {
         background: #0077b6;
         color: white;
         border: none;
-        padding: 12px 25px;
+        padding: 15px 25px;
         border-radius: 10px;
         cursor: pointer;
         font-weight: 600;
-        margin: 15px;
         font-size: 1rem;
         transition: 0.3s;
+        text-align: center;
       }
       .btn:hover {
         background: #023e8a;
+        transform: translateY(-2px);
+      }
+      .btn-secondary {
+        background: #6c757d;
+      }
+      .btn-secondary:hover {
+        background: #5a6268;
+      }
+      .btn-warning {
+        background: #ffc107;
+        color: #000;
+      }
+      .btn-warning:hover {
+        background: #e0a800;
+      }
+      .btn-danger {
+        background: #dc3545;
+      }
+      .btn-danger:hover {
+        background: #c82333;
+      }
+      .loading {
+        text-align: center;
+        padding: 40px;
+        color: #0077b6;
+        font-size: 1.2rem;
+      }
+      .appointments-section {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+      .appointment-card {
+        background: #f8f9fa;
+        border-left: 4px solid #0077b6;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+      }
+      .appointment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .appointment-doctor {
+        font-weight: 600;
+        color: #0077b6;
+        font-size: 1.1rem;
+      }
+      .status-badge {
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+      .status-pending {
+        background: #fff3cd;
+        color: #856404;
+      }
+      .status-confirmed {
+        background: #d4edda;
+        color: #155724;
+      }
+      .status-cancelled {
+        background: #f8d7da;
+        color: #721c24;
+      }
+      @media (max-width: 768px) {
+        .btn-grid {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
   <body>
-    <h1>Welcome to Patient Dashboard 👨‍⚕️</h1>
-    <p>Manage your appointments and health records from here.</p>
+    <div class="container">
+      <div class="header">
+        <h1>👨‍⚕️ Patient Dashboard</h1>
+        <p class="welcome-text" id="welcomeText">Welcome back!</p>
+      </div>
 
-    <button class="btn" onclick="goToAppointments()">Book Appointment</button>
-    <button class="btn" onclick="goToChecklist()">System Checklist</button>
-    <br /><br />
-    <button class="btn" onclick="logout()">Logout</button>
+      <div id="loadingBox" class="loading" style="display: none;">
+        Loading your dashboard...
+      </div>
 
+      <div id="profileAlert" class="profile-alert" style="display: none;">
+        <h3>⚠️ Complete Your Profile</h3>
+        <p>Please complete your medical profile to book appointments and access all features.</p>
+        <button class="btn btn-warning" onclick="goToProfile()">Complete Profile Now</button>
+      </div>
+
+      <div id="profileCard" class="profile-card" style="display: none;">
+        <h2>📋 Your Profile</h2>
+        <div class="profile-info" id="profileInfo"></div>
+        <button class="btn btn-secondary" onclick="goToProfile()">Edit Profile</button>
+      </div>
+
+      <div id="appointmentsSection" class="appointments-section" style="display: none;">
+        <h2>📅 Your Appointments</h2>
+        <div id="appointmentsList"></div>
+      </div>
+
+      <div class="btn-grid">
+        <button class="btn" onclick="goToAppointments()">📅 Book Appointment</button>
+        <button class="btn" onclick="goToProfile()">👤 Manage Profile</button>
+        <button class="btn btn-secondary" onclick="goToChecklist()">📊 System Checklist</button>
+        <button class="btn btn-danger" onclick="logoutUser()">🚪 Logout</button>
+      </div>
+    </div>
+
+    <script src="js/api.js"></script>
     <script>
-      const user = JSON.parse(sessionStorage.getItem("loggedInUser"));
-      if (!user || user.role !== "patient") {
-        window.location.href = "http://localhost:5000/login.html";
+      // Check authentication
+      if (!requireAuth('patient')) {
+        // Will redirect if not authenticated
+      }
+
+      let hasProfile = false;
+
+      // Load dashboard data
+      async function loadDashboard() {
+        const loadingBox = document.getElementById('loadingBox');
+        const welcomeText = document.getElementById('welcomeText');
+        const user = getStoredUser();
+
+        loadingBox.style.display = 'block';
+
+        try {
+          // Update welcome message
+          if (user && user.name) {
+            welcomeText.textContent = `Welcome back, ${user.name}!`;
+          }
+
+          // Load patient profile
+          await loadProfile();
+
+          // Load appointments
+          await loadAppointments();
+
+        } catch (error) {
+          console.error('Error loading dashboard:', error);
+        } finally {
+          loadingBox.style.display = 'none';
+        }
+      }
+
+      // Load patient profile
+      async function loadProfile() {
+        const profileAlert = document.getElementById('profileAlert');
+        const profileCard = document.getElementById('profileCard');
+        const profileInfo = document.getElementById('profileInfo');
+
+        try {
+          const profile = await PatientAPI.getProfile();
+          hasProfile = true;
+
+          // Hide alert, show profile card
+          profileAlert.style.display = 'none';
+          profileCard.style.display = 'block';
+
+          // Display profile information
+          let html = `
+            <div class="info-item">
+              <div class="info-label">Name</div>
+              <div class="info-value">${profile.name}</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Age</div>
+              <div class="info-value">${profile.age} years</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Gender</div>
+              <div class="info-value">${profile.gender}</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Blood Group</div>
+              <div class="info-value">${profile.bloodGroup}</div>
+            </div>
+          `;
+
+          if (profile.symptoms && profile.symptoms.length > 0) {
+            html += `
+              <div class="info-item" style="grid-column: 1 / -1;">
+                <div class="info-label">Current Symptoms</div>
+                <div class="tags">
+                  ${profile.symptoms.map(s => `<span class="tag">${s}</span>`).join('')}
+                </div>
+              </div>
+            `;
+          }
+
+          if (profile.allergies && profile.allergies.length > 0) {
+            html += `
+              <div class="info-item" style="grid-column: 1 / -1;">
+                <div class="info-label">Allergies</div>
+                <div class="tags">
+                  ${profile.allergies.map(a => `<span class="tag">${a}</span>`).join('')}
+                </div>
+              </div>
+            `;
+          }
+
+          profileInfo.innerHTML = html;
+
+        } catch (error) {
+          // Profile doesn't exist
+          hasProfile = false;
+          profileAlert.style.display = 'block';
+          profileCard.style.display = 'none';
+        }
+      }
+
+      // Load appointments
+      async function loadAppointments() {
+        const appointmentsSection = document.getElementById('appointmentsSection');
+        const appointmentsList = document.getElementById('appointmentsList');
+
+        try {
+          const appointments = await AppointmentAPI.getMy();
+
+          if (appointments && appointments.length > 0) {
+            appointmentsSection.style.display = 'block';
+
+            let html = '';
+            appointments.forEach(apt => {
+              const statusClass = `status-${apt.status.toLowerCase()}`;
+              html += `
+                <div class="appointment-card">
+                  <div class="appointment-header">
+                    <div class="appointment-doctor">Dr. ${apt.doctorId?.name || 'Unknown'}</div>
+                    <span class="status-badge ${statusClass}">${apt.status}</span>
+                  </div>
+                  <div><strong>Specialization:</strong> ${apt.specialization}</div>
+                  <div><strong>Date:</strong> ${new Date(apt.appointmentDate).toLocaleDateString()}</div>
+                  <div><strong>Time:</strong> ${apt.appointmentTime}</div>
+                  <div><strong>Hospital:</strong> ${apt.hospital}</div>
+                </div>
+              `;
+            });
+
+            appointmentsList.innerHTML = html;
+          } else {
+            appointmentsSection.style.display = 'block';
+            appointmentsList.innerHTML = '<p style="text-align: center; color: #666;">No appointments yet. Book your first appointment!</p>';
+          }
+        } catch (error) {
+          console.error('Error loading appointments:', error);
+          appointmentsSection.style.display = 'none';
+        }
       }
 
       function goToAppointments() {
-        window.location.href = "http://localhost:5000/appointment.html";
+        if (!hasProfile) {
+          alert('Please complete your profile before booking appointments.');
+          goToProfile();
+          return;
+        }
+        window.location.href = "appointment.html";
       }
+
+      function goToProfile() {
+        window.location.href = "patientProfile.html";
+      }
+
       function goToChecklist() {
-        window.location.href = "http://localhost:5000/dashboard.html";
+        window.location.href = "dashboard.html";
       }
-      function logout() {
-        sessionStorage.clear();
-        window.location.href = "http://localhost:5000/login.html";
+
+      function logoutUser() {
+        logout();
       }
+
+      // Load dashboard on page load
+      loadDashboard();
     </script>
   </body>
 </html>

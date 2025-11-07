@@ -1,0 +1,14 @@
+{
+  "patientName": "Test Patient",
+  "doctorName": "Dr Anjali",
+  "hospital": "Apollo Hospitals",
+  "specialization": "Cardiology",
+  "disease": "Cardiology",
+  "appointmentDate": "2025-01-15",
+  "appointmentTime": "10:00",
+  "age": 30,
+  "gender": "Male",
+  "bloodGroup": "O+",
+  "symptoms": ["Fever", "Headache"],
+  "status": "Pending"
+}

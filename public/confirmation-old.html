@@ -16,9 +16,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: 100vh;
+        height: 100vh;
         margin: 0;
-        padding: 20px;
       }
 
       .confirmation-box {
@@ -27,7 +26,6 @@
         border-radius: 20px;
         box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
         max-width: 550px;
-        width: 100%;
         text-align: center;
         animation: fadeIn 1s ease-in-out;
       }
@@ -58,7 +56,7 @@
       }
 
       p {
-        margin: 8px 0;
+        margin: 6px 0;
       }
 
       .ready-msg {
@@ -91,36 +89,20 @@
         color: #1b4332;
       }
 
-      .status-badge {
-        display: inline-block;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        margin-left: 8px;
-      }
-
-      .status-pending {
-        background: #fff3cd;
-        color: #856404;
-      }
-
       button {
         margin-top: 25px;
         background: #1b4332;
         color: white;
         border: none;
-        padding: 12px 25px;
+        padding: 10px 22px;
         border-radius: 8px;
         cursor: pointer;
         font-weight: 600;
         transition: 0.3s;
-        font-size: 1rem;
       }
 
       button:hover {
         background: #081c15;
-        transform: translateY(-2px);
       }
 
       footer {
@@ -128,7 +110,7 @@
         font-size: 0.9rem;
         color: #2d6a4f;
         border-top: 1px solid #b7e4c7;
-        padding-top: 15px;
+        padding-top: 10px;
       }
     </style>
   </head>
@@ -147,11 +129,11 @@
 
       <div id="doctorMessage" class="doc-msg"></div>
 
-      <button onclick="goHome()">🏥 Go Back to Dashboard</button>
+      <button onclick="goHome()">🏥 Go Back to Home</button>
 
       <footer>
         📞 For any queries, call <b>1800-123-HEAL</b> or email
-        <b>support@hospital.com</b>
+        <b>support@apollohealth.com</b>
       </footer>
     </div>
 
@@ -169,7 +151,7 @@
           "<p>No appointment found. Please book again.</p>";
       } else {
         // Current (booked) date
-        const bookedDate = new Date(appointment.createdAt || new Date());
+        const bookedDate = new Date();
         const formattedBookedDate = bookedDate.toLocaleDateString("en-IN", {
           weekday: "long",
           year: "numeric",
@@ -177,8 +159,9 @@
           day: "numeric",
         });
 
-        // Appointment date
-        const meetingDate = new Date(appointment.appointmentDate || appointment.meetingDate);
+        // Example: Meeting date - tomorrow (can be replaced with chosen date if available)
+        const meetingDate = new Date(bookedDate);
+        meetingDate.setDate(meetingDate.getDate() + 1);
         const formattedMeetingDate = meetingDate.toLocaleDateString("en-IN", {
           weekday: "long",
           year: "numeric",
@@ -187,14 +170,11 @@
         });
 
         // Show appointment info
-        const statusClass = appointment.status === 'Pending' ? 'status-pending' : '';
         appointmentDiv.innerHTML = `
-          <p><b>Patient:</b> ${appointment.patientName || 'You'}</p>
-          <p><b>Doctor:</b> ${appointment.doctorName || appointment.doctor}</p>
+          <p><b>Doctor:</b> ${appointment.doctor}</p>
           <p><b>Hospital:</b> ${appointment.hospital}</p>
-          <p><b>Department:</b> ${appointment.specialization || appointment.disease}</p>
-          <p><b>Scheduled Time:</b> ${appointment.appointmentTime || appointment.time}</p>
-          <p><b>Status:</b> <span class="status-badge ${statusClass}">${appointment.status || 'Pending'}</span></p>
+          <p><b>Department:</b> ${appointment.disease}</p>
+          <p><b>Scheduled Time:</b> ${appointment.time}</p>
         `;
 
         // Display dates
@@ -213,7 +193,7 @@
             "Bring any previous X-ray or MRI scans for better diagnosis.",
           Dermatology: "Avoid using creams or lotions before your appointment.",
           Pediatrics:
-            "Carry your child's medical reports and vaccination history.",
+            "Carry your child’s medical reports and vaccination history.",
           Ophthalmology:
             "Avoid wearing contact lenses before your appointment.",
           ENT: "Please do not use ear drops or nasal sprays today.",
@@ -222,17 +202,13 @@
           Gastroenterology: "Avoid heavy meals 2 hours before your check-up.",
         };
 
-        const specialization = appointment.specialization || appointment.disease;
         docMsgDiv.innerText =
-          doctorTips[specialization] ||
-          "Please follow the doctor's advice carefully and arrive on time.";
+          doctorTips[appointment.disease] ||
+          "Please follow the doctor’s advice carefully and arrive on time.";
       }
 
       function goHome() {
-        // Clear the confirmed appointment from session
-        sessionStorage.removeItem("confirmedAppointment");
-        sessionStorage.removeItem("appointmentInfo");
-        window.location.href = "patient.html";
+        window.location.href = "appointment.html";
       }
     </script>
   </body>

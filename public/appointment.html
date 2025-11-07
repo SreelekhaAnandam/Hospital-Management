@@ -135,45 +135,6 @@
           Fortis Healthcare
         </div>
         <div class="hospital-card" onclick="selectHospital('AIIMS')">AIIMS</div>
-        <div
-          class="hospital-card"
-          onclick="selectHospital('Manipal Hospitals')"
-        >
-          Manipal Hospitals
-        </div>
-        <div class="hospital-card" onclick="selectHospital('Max Healthcare')">
-          Max Healthcare
-        </div>
-        <div class="hospital-card" onclick="selectHospital('Medanta')">
-          Medanta
-        </div>
-        <div
-          class="hospital-card"
-          onclick="selectHospital('Kokilaben Dhirubhai Ambani Hospital')"
-        >
-          Kokilaben Dhirubhai Ambani Hospital
-        </div>
-        <div
-          class="hospital-card"
-          onclick="selectHospital('BLK-Max Super Speciality Hospital')"
-        >
-          BLK-Max Super Speciality Hospital
-        </div>
-        <div class="hospital-card" onclick="selectHospital('Artemis Hospital')">
-          Artemis Hospital
-        </div>
-        <div
-          class="hospital-card"
-          onclick="selectHospital('Indraprastha Apollo Hospital')"
-        >
-          Indraprastha Apollo Hospital
-        </div>
-        <div
-          class="hospital-card"
-          onclick="selectHospital('Lilavati Hospital')"
-        >
-          Lilavati Hospital
-        </div>
       </div>
 
       <!-- Step 2: Select Disease -->
@@ -196,17 +157,19 @@
         </select>
       </div>
 
-      <!-- Step 3: Select Date and Time -->
+      <!-- Step 3: Select Date and Available Time Slots -->
       <div id="timeSection" style="display: none">
         <p><b>Select Date:</b></p>
         <input type="date" id="appointmentDate" min="" />
 
-        <p><b>Select Time:</b></p>
-        <input type="time" id="appointmentTime" />
+        <div id="availableSlotsSection" style="display: none; margin-top: 20px;">
+          <p><b>Available Time Slots:</b></p>
+          <div id="timeSlots" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 15px;"></div>
+        </div>
 
         <div id="availabilityMessage"></div>
 
-        <button onclick="goToDoctorPage()">Next</button>
+        <button onclick="goToDoctorPage()" id="nextBtn" style="display: none;">Next</button>
         <button
           onclick="goBack()"
           style="background: #dc3545; margin-left: 10px"
@@ -242,48 +205,107 @@
       const today = new Date().toISOString().split("T")[0];
       document.getElementById("appointmentDate").setAttribute("min", today);
 
-      // Step 3: Check doctor availability dynamically
-      document
-        .getElementById("appointmentTime")
-        .addEventListener("change", function () {
-          const time = this.value;
-          const unavailableSlots = [
-            "12:00",
-            "12:30",
-            "13:00",
-            "16:00",
-            "16:30",
-          ];
+      let selectedTimeSlot = null;
 
-          if (unavailableSlots.includes(time)) {
-            availabilityMessage.innerHTML =
-              '<div class="availability-box not-available">❌ Doctor not available at this time. Please select another slot.</div>';
-          } else if (time) {
-            availabilityMessage.innerHTML =
-              '<div class="availability-box available">✅ Doctor available at ' +
-              time +
-              ". You can proceed to book your appointment.</div>";
-          } else {
-            availabilityMessage.innerHTML = "";
+      // Generate available time slots when date is selected
+      document.getElementById("appointmentDate").addEventListener("change", function() {
+        const selectedDate = this.value;
+        if (selectedDate) {
+          generateTimeSlots();
+        }
+      });
+
+      function generateTimeSlots() {
+        const slotsContainer = document.getElementById("timeSlots");
+        const slotsSection = document.getElementById("availableSlotsSection");
+        const nextBtn = document.getElementById("nextBtn");
+        
+        // Show slots section
+        slotsSection.style.display = "block";
+        
+        // Generate time slots from 9 AM to 5 PM (every 30 minutes)
+        const slots = [];
+        for (let hour = 9; hour <= 17; hour++) {
+          for (let minute = 0; minute < 60; minute += 30) {
+            if (hour === 17 && minute > 0) break; // Stop at 5:00 PM
+            const timeStr = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+            slots.push(timeStr);
           }
+        }
+
+        // Randomly mark some slots as unavailable (for demo purposes)
+        const unavailableSlots = ["12:00", "12:30", "13:00", "16:00", "16:30"];
+        
+        slotsContainer.innerHTML = "";
+        selectedTimeSlot = null;
+        nextBtn.style.display = "none";
+        
+        slots.forEach(slot => {
+          const isAvailable = !unavailableSlots.includes(slot);
+          const slotBtn = document.createElement("button");
+          slotBtn.textContent = slot;
+          slotBtn.className = "time-slot-btn";
+          slotBtn.style.cssText = `
+            padding: 12px 20px;
+            border: 2px solid ${isAvailable ? '#0077b6' : '#ccc'};
+            background: ${isAvailable ? 'white' : '#f0f0f0'};
+            color: ${isAvailable ? '#0077b6' : '#999'};
+            border-radius: 8px;
+            cursor: ${isAvailable ? 'pointer' : 'not-allowed'};
+            font-weight: 600;
+            transition: 0.3s;
+            min-width: 100px;
+          `;
+          
+          if (isAvailable) {
+            slotBtn.onclick = function() {
+              // Remove selection from all slots
+              document.querySelectorAll('.time-slot-btn').forEach(btn => {
+                if (btn.style.background !== 'rgb(240, 240, 240)') {
+                  btn.style.background = 'white';
+                  btn.style.color = '#0077b6';
+                }
+              });
+              
+              // Select this slot
+              this.style.background = '#0077b6';
+              this.style.color = 'white';
+              selectedTimeSlot = slot;
+              
+              // Show next button
+              nextBtn.style.display = "inline-block";
+              
+              // Show success message
+              availabilityMessage.innerHTML =
+                '<div class="availability-box available">✅ Time slot ' + slot + ' selected. Click Next to continue.</div>';
+            };
+            
+            slotBtn.onmouseover = function() {
+              if (this.style.background !== 'rgb(0, 119, 182)') {
+                this.style.background = '#e6f7ff';
+              }
+            };
+            
+            slotBtn.onmouseout = function() {
+              if (this.style.background !== 'rgb(0, 119, 182)') {
+                this.style.background = 'white';
+              }
+            };
+          } else {
+            slotBtn.title = "This slot is not available";
+          }
+          
+          slotsContainer.appendChild(slotBtn);
         });
+      }
 
       // Step 4: Proceed to next page
       function goToDoctorPage() {
         const disease = document.getElementById("diseaseSelect").value;
         const date = document.getElementById("appointmentDate").value;
-        const time = document.getElementById("appointmentTime").value;
 
-        if (!selectedHospital || !disease || !date || !time) {
-          alert("Please fill all details before proceeding.");
-          return;
-        }
-
-        const unavailableSlots = ["12:00", "12:30", "13:00", "16:00", "16:30"];
-        if (unavailableSlots.includes(time)) {
-          alert(
-            "The selected time slot is already booked. Please choose another time."
-          );
+        if (!selectedHospital || !disease || !date || !selectedTimeSlot) {
+          alert("Please fill all details and select a time slot before proceeding.");
           return;
         }
 
@@ -293,7 +315,7 @@
             hospital: selectedHospital,
             disease,
             date,
-            time,
+            time: selectedTimeSlot,
           })
         );
 

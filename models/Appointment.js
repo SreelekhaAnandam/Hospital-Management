@@ -8,6 +8,7 @@ const appointmentSchema = new mongoose.Schema({
   patientId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+    required: true,
   },
   doctorName: {
     type: String,
@@ -21,30 +22,42 @@ const appointmentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  disease: {
+  specialization: {
     type: String,
     required: true,
   },
+  disease: {
+    type: String,
+  },
   age: {
     type: Number,
-    required: true,
   },
   gender: {
     type: String,
     enum: ["Male", "Female", "Other"],
-    required: true,
   },
+  appointmentDate: {
+    type: Date,
+  },
+  appointmentTime: {
+    type: String,
+  },
+  // Legacy fields for backward compatibility
   meetingDate: {
     type: String,
-    required: true,
+    required: function() {
+      return !this.appointmentDate;
+    }
   },
   time: {
     type: String,
-    required: true,
+    required: function() {
+      return !this.appointmentTime;
+    }
   },
   status: {
     type: String,
-    enum: ["Pending", "Approved", "Rejected", "Completed"],
+    enum: ["Pending", "Confirmed", "Approved", "Rejected", "Completed", "Cancelled"],
     default: "Pending",
   },
   symptoms: [String],

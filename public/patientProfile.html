@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Patient Profile | Hospital Management</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #e0f7fa, #ffffff);
+        padding: 40px 20px;
+        margin: 0;
+      }
+      .container {
+        max-width: 700px;
+        margin: 0 auto;
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      }
+      h1 {
+        color: #0077b6;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      .subtitle {
+        text-align: center;
+        color: #666;
+        margin-bottom: 30px;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+        font-weight: 600;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-family: "Poppins", sans-serif;
+        transition: border-color 0.3s;
+        box-sizing: border-box;
+      }
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #0077b6;
+      }
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+      .tag-input-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 8px;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        min-height: 50px;
+      }
+      .tag {
+        background: #0077b6;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9rem;
+      }
+      .tag-remove {
+        cursor: pointer;
+        font-weight: bold;
+      }
+      .tag-input {
+        border: none;
+        outline: none;
+        flex: 1;
+        min-width: 150px;
+        padding: 6px;
+        font-family: "Poppins", sans-serif;
+      }
+      .btn {
+        background: #0077b6;
+        color: white;
+        border: none;
+        padding: 14px 30px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: 0.3s;
+        width: 100%;
+        margin-top: 10px;
+      }
+      .btn:hover {
+        background: #023e8a;
+      }
+      .btn-secondary {
+        background: #6c757d;
+        margin-top: 10px;
+      }
+      .btn-secondary:hover {
+        background: #5a6268;
+      }
+      .message {
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: 600;
+      }
+      .message.success {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+      .message.error {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+      .loading {
+        text-align: center;
+        padding: 20px;
+        color: #0077b6;
+      }
+      @media (max-width: 768px) {
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>👤 Patient Profile</h1>
+      <p class="subtitle">Complete your medical profile to book appointments</p>
+
+      <div id="messageBox"></div>
+      <div id="loadingBox" class="loading" style="display: none;">
+        Loading your profile...
+      </div>
+
+      <form id="profileForm">
+        <div class="form-group">
+          <label for="name">Full Name *</label>
+          <input type="text" id="name" required />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="age">Age *</label>
+            <input type="number" id="age" min="1" max="150" required />
+          </div>
+
+          <div class="form-group">
+            <label for="gender">Gender *</label>
+            <select id="gender" required>
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="bloodGroup">Blood Group *</label>
+          <select id="bloodGroup" required>
+            <option value="">Select Blood Group</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Current Symptoms (Press Enter to add)</label>
+          <div class="tag-input-container" id="symptomsContainer">
+            <input
+              type="text"
+              class="tag-input"
+              id="symptomsInput"
+              placeholder="Type symptom and press Enter"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Medical History (Press Enter to add)</label>
+          <div class="tag-input-container" id="medicalHistoryContainer">
+            <input
+              type="text"
+              class="tag-input"
+              id="medicalHistoryInput"
+              placeholder="Type medical condition and press Enter"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Allergies (Press Enter to add)</label>
+          <div class="tag-input-container" id="allergiesContainer">
+            <input
+              type="text"
+              class="tag-input"
+              id="allergiesInput"
+              placeholder="Type allergy and press Enter"
+            />
+          </div>
+        </div>
+
+        <h3 style="color: #0077b6; margin-top: 30px;">Emergency Contact</h3>
+
+        <div class="form-group">
+          <label for="emergencyName">Contact Name</label>
+          <input type="text" id="emergencyName" />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="emergencyPhone">Contact Phone</label>
+            <input type="tel" id="emergencyPhone" />
+          </div>
+
+          <div class="form-group">
+            <label for="emergencyRelationship">Relationship</label>
+            <input type="text" id="emergencyRelationship" placeholder="e.g., Spouse, Parent" />
+          </div>
+        </div>
+
+        <button type="submit" class="btn">Save Profile</button>
+        <button type="button" class="btn btn-secondary" onclick="goBack()">
+          Cancel
+        </button>
+      </form>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+      // Check authentication
+      if (!requireAuth('patient')) {
+        // Will redirect if not authenticated
+      }
+
+      const symptoms = [];
+      const medicalHistory = [];
+      const allergies = [];
+
+      // Tag input functionality
+      function setupTagInput(inputId, containerId, tagsArray) {
+        const input = document.getElementById(inputId);
+        const container = document.getElementById(containerId);
+
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            const value = input.value.trim();
+            if (value && !tagsArray.includes(value)) {
+              tagsArray.push(value);
+              renderTags(containerId, tagsArray);
+              input.value = '';
+            }
+          }
+        });
+      }
+
+      function renderTags(containerId, tagsArray) {
+        const container = document.getElementById(containerId);
+        const input = container.querySelector('.tag-input');
+        
+        // Remove existing tags
+        container.querySelectorAll('.tag').forEach(tag => tag.remove());
+        
+        // Add tags
+        tagsArray.forEach((tag, index) => {
+          const tagElement = document.createElement('div');
+          tagElement.className = 'tag';
+          tagElement.innerHTML = `
+            ${tag}
+            <span class="tag-remove" onclick="removeTag('${containerId}', ${index})">×</span>
+          `;
+          container.insertBefore(tagElement, input);
+        });
+      }
+
+      function removeTag(containerId, index) {
+        if (containerId === 'symptomsContainer') {
+          symptoms.splice(index, 1);
+          renderTags(containerId, symptoms);
+        } else if (containerId === 'medicalHistoryContainer') {
+          medicalHistory.splice(index, 1);
+          renderTags(containerId, medicalHistory);
+        } else if (containerId === 'allergiesContainer') {
+          allergies.splice(index, 1);
+          renderTags(containerId, allergies);
+        }
+      }
+
+      // Setup tag inputs
+      setupTagInput('symptomsInput', 'symptomsContainer', symptoms);
+      setupTagInput('medicalHistoryInput', 'medicalHistoryContainer', medicalHistory);
+      setupTagInput('allergiesInput', 'allergiesContainer', allergies);
+
+      // Load existing profile
+      async function loadProfile() {
+        const loadingBox = document.getElementById('loadingBox');
+        loadingBox.style.display = 'block';
+
+        try {
+          const profile = await PatientAPI.getProfile();
+          
+          // Populate form
+          document.getElementById('name').value = profile.name || '';
+          document.getElementById('age').value = profile.age || '';
+          document.getElementById('gender').value = profile.gender || '';
+          document.getElementById('bloodGroup').value = profile.bloodGroup || '';
+          
+          // Populate arrays
+          if (profile.symptoms) {
+            symptoms.push(...profile.symptoms);
+            renderTags('symptomsContainer', symptoms);
+          }
+          if (profile.medicalHistory) {
+            medicalHistory.push(...profile.medicalHistory);
+            renderTags('medicalHistoryContainer', medicalHistory);
+          }
+          if (profile.allergies) {
+            allergies.push(...profile.allergies);
+            renderTags('allergiesContainer', allergies);
+          }
+          
+          // Emergency contact
+          if (profile.emergencyContact) {
+            document.getElementById('emergencyName').value = profile.emergencyContact.name || '';
+            document.getElementById('emergencyPhone').value = profile.emergencyContact.phone || '';
+            document.getElementById('emergencyRelationship').value = profile.emergencyContact.relationship || '';
+          }
+        } catch (error) {
+          // Profile doesn't exist yet, that's okay
+          console.log('No existing profile found, creating new one');
+        } finally {
+          loadingBox.style.display = 'none';
+        }
+      }
+
+      // Save profile
+      document.getElementById('profileForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const messageBox = document.getElementById('messageBox');
+        messageBox.innerHTML = '';
+
+        const profileData = {
+          name: document.getElementById('name').value.trim(),
+          age: parseInt(document.getElementById('age').value),
+          gender: document.getElementById('gender').value,
+          bloodGroup: document.getElementById('bloodGroup').value,
+          symptoms: symptoms,
+          medicalHistory: medicalHistory,
+          allergies: allergies,
+          emergencyContact: {
+            name: document.getElementById('emergencyName').value.trim(),
+            phone: document.getElementById('emergencyPhone').value.trim(),
+            relationship: document.getElementById('emergencyRelationship').value.trim()
+          }
+        };
+
+        try {
+          await PatientAPI.saveProfile(profileData);
+          
+          messageBox.innerHTML = '<div class="message success">✓ Profile saved successfully!</div>';
+          
+          setTimeout(() => {
+            window.location.href = 'patient.html';
+          }, 1500);
+        } catch (error) {
+          messageBox.innerHTML = `<div class="message error">✗ Error: ${error.message}</div>`;
+        }
+      });
+
+      function goBack() {
+        window.location.href = 'patient.html';
+      }
+
+      // Load profile on page load
+      loadProfile();
+    </script>
+  </body>
+</html>

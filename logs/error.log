@@ -1,0 +1,3 @@
+2025-11-07 02:09:25:925 [31merror[39m: [31mError creating appointment: Appointment validation failed: time: Path `time` is required., meetingDate: Path `meetingDate` is required.[39m
+2025-11-07 02:10:04:104 [31merror[39m: [31mError creating appointment: Appointment validation failed: time: Path `time` is required., meetingDate: Path `meetingDate` is required.[39m
+2025-11-07 12:29:25:2925 [31merror[39m: [31mError in register: E11000 duplicate key error collection: test.users index: username_1 dup key: { username: "kuch" }[39m

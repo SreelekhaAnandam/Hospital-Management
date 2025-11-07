@@ -5,6 +5,20 @@ const logger = require("../logger");
 
 const router = express.Router();
 
+// Get current doctor's profile
+router.get("/profile", auth, requireRole(["doctor"]), async (req, res) => {
+  try {
+    const doctor = await Doctor.findOne({ userId: req.user.userId }).populate("userId", "name email username");
+    if (!doctor) {
+      return res.status(404).json({ message: "Doctor profile not found" });
+    }
+    res.json(doctor);
+  } catch (error) {
+    logger.error("Error fetching doctor profile:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 // Get all doctors
 router.get("/", async (req, res) => {
   try {
@@ -58,6 +72,27 @@ router.post("/", auth, requireRole(["admin"]), async (req, res) => {
     res.status(201).json(doctor);
   } catch (error) {
     logger.error("Error creating doctor:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// Update doctor profile (self)
+router.patch("/profile", auth, requireRole(["doctor"]), async (req, res) => {
+  try {
+    const doctor = await Doctor.findOne({ userId: req.user.userId });
+    if (!doctor) {
+      return res.status(404).json({ message: "Doctor profile not found" });
+    }
+
+    const updatedDoctor = await Doctor.findByIdAndUpdate(
+      doctor._id,
+      req.body,
+      { new: true }
+    ).populate("userId", "name email username");
+    
+    res.json(updatedDoctor);
+  } catch (error) {
+    logger.error("Error updating doctor profile:", error);
     res.status(500).json({ message: "Server error" });
   }
 });
