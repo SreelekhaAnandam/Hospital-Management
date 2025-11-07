@@ -1,6 +1,9 @@
 // API Utility Functions for Hospital Management System
 
-const API_BASE_URL = 'http://localhost:5000';
+// Dynamically set API base URL based on environment
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:5000'
+  : window.location.origin;
 
 // Get stored user data
 function getStoredUser() {
